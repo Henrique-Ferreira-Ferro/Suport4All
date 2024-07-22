@@ -33,6 +33,8 @@ public class DepartamentoService {
 		return repositoryDepart.save(departamento);
 	}
 	
+	
+	
 	public DepartamentoEntity updateDepartById(DepartamentoEntity departamento, Long id){
 		Optional<DepartamentoEntity> depart = repositoryDepart.findById(id);
 		
