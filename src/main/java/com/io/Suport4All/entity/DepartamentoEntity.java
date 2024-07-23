@@ -62,9 +62,12 @@ public class DepartamentoEntity {
 	}
 
 
-	public void setUsers(List<UsuarioEntity> list) {
-		this.users.addAll(list);
+	public void setUsers(List<UsuarioEntity> users) {
+		this.users = users;
 	}
+
+
+	
 	
 	
 	
