@@ -34,6 +34,59 @@ public class ChamadoEntity {
 	
 	//Pesquisar como diabos vou implementar isso!
 	private Blob anexo;
+
+	//Um chamado está associado a apenas 1 unico usuario
+	private UsuarioEntity usuario;
+	
+	
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public String getPrioridade() {
+		return prioridade;
+	}
+
+	public void setPrioridade(String prioridade) {
+		this.prioridade = prioridade;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public Blob getAnexo() {
+		return anexo;
+	}
+
+	public void setAnexo(Blob anexo) {
+		this.anexo = anexo;
+	}
 	
 	
 	

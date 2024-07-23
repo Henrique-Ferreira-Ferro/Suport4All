@@ -1,5 +1,7 @@
 package com.io.Suport4All.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,6 +30,11 @@ public class UsuarioEntity {
 	@ManyToOne
 	@JoinColumn(name = "id_departamento")
 	private DepartamentoEntity departamento;
+	
+	
+	//Um usuario pode abrir muitos chamados
+	
+	private List<ChamadoEntity> chamados;
 	
 	
 	public UsuarioEntity() {
@@ -104,6 +111,16 @@ public class UsuarioEntity {
 
 	public void setDepartamento(DepartamentoEntity departamento) {
 		this.departamento = departamento;
+	}
+
+
+	public List<ChamadoEntity> getChamados() {
+		return chamados;
+	}
+
+
+	public void setChamados(List<ChamadoEntity> chamados) {
+		this.chamados = chamados;
 	}
 	
 	
