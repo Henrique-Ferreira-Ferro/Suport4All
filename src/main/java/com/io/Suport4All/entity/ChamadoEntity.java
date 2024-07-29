@@ -36,7 +36,7 @@ public class ChamadoEntity {
 	private Blob anexo;
 
 	//Um chamado está associado a apenas 1 unico usuario
-	private UsuarioEntity usuario;
+//	private UsuarioEntity usuario;
 	
 	
 	
