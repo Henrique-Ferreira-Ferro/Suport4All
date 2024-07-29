@@ -34,7 +34,7 @@ public class UsuarioEntity {
 	
 	//Um usuario pode abrir muitos chamados
 	
-	private List<ChamadoEntity> chamados;
+//	private List<ChamadoEntity> chamados;
 	
 	
 	public UsuarioEntity() {
@@ -114,14 +114,14 @@ public class UsuarioEntity {
 	}
 
 
-	public List<ChamadoEntity> getChamados() {
-		return chamados;
-	}
-
-
-	public void setChamados(List<ChamadoEntity> chamados) {
-		this.chamados = chamados;
-	}
+//	public List<ChamadoEntity> getChamados() {
+//		return chamados;
+//	}
+//
+//
+//	public void setChamados(List<ChamadoEntity> chamados) {
+//		this.chamados = chamados;
+//	}
 	
 	
 	
