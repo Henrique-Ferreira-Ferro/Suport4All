@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.repository.DepartamentoRepository;
@@ -39,8 +40,8 @@ public class UsuarioService {
 	
 	
 	//Criar um usuario
-	public UsuarioEntity createUser(UsuarioEntity user) {
-		Long departId = user.getDepartamento().getId();
+	public UsuarioDTO createUser(UsuarioDTO user) {
+		Long departId = user.getDepartamento();
 		
 		Optional<DepartamentoEntity> departament = departamentoRepository.findById(departId);
 		
@@ -48,8 +49,15 @@ public class UsuarioService {
 			throw new RuntimeException("O departamento não pode estar vaziu!");
 		}
 		
-		user.setDepartamento(departament.get());
-		return usuarioRepository.save(user);
+		UsuarioEntity usuarioEnti = new UsuarioEntity();
+		usuarioEnti.setNome(user.getNome());
+		usuarioEnti.setSenha(usuarioEnti.getSenha());
+		usuarioEnti.setEmail(user.getEmail());
+		usuarioEnti.setNivel(usuarioEnti.getNivel());
+		usuarioEnti.setDepartamento(departament.get());
+		usuarioEnti = usuarioRepository.save(usuarioEnti);
+		return new UsuarioDTO(usuarioEnti);
+		
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.service.UsuarioService;
 
@@ -34,7 +35,7 @@ public class UsuarioController {
 	}
 
 	@PostMapping("/create")
-	public UsuarioEntity createUser(@RequestBody UsuarioEntity user) {
+	public UsuarioDTO createUser(@RequestBody UsuarioDTO user) {
 		return usuarioService.createUser(user);
 	}
 
