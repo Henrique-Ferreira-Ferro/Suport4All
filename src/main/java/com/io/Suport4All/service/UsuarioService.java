@@ -51,9 +51,9 @@ public class UsuarioService {
 		
 		UsuarioEntity usuarioEnti = new UsuarioEntity();
 		usuarioEnti.setNome(user.getNome());
-		usuarioEnti.setSenha(usuarioEnti.getSenha());
+		usuarioEnti.setSenha(user.getSenha());
 		usuarioEnti.setEmail(user.getEmail());
-		usuarioEnti.setNivel(usuarioEnti.getNivel());
+		usuarioEnti.setNivel(user.getNivel());
 		usuarioEnti.setDepartamento(departament.get());
 		usuarioEnti = usuarioRepository.save(usuarioEnti);
 		return new UsuarioDTO(usuarioEnti);
