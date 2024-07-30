@@ -58,3 +58,4 @@ build/
 hs_err_pid*
 replay_pid*
 >>>>>>> ea8f34a9fb3dd00fe2319fcab42803a14a922486
+/bin/
