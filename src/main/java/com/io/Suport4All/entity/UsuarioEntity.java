@@ -1,6 +1,7 @@
 package com.io.Suport4All.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -25,7 +26,7 @@ public class UsuarioEntity {
 	@NotBlank
 	private String nivel;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_departamento")
 	private DepartamentoEntity departamento;
 	
