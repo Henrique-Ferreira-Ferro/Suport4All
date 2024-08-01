@@ -15,14 +15,14 @@ public class UsuarioDTO {
 		
 	}
 
-	public UsuarioDTO(Long id, String nome, String senha, String email, String nivel, Long departamento) {
+	public UsuarioDTO(Long id, String nome, String senha, String email, String nivel, Long departamentoId) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
 		this.nivel = nivel;
-		this.departamentoId = departamento;
+		this.departamentoId = departamentoId;
 	}
 	
 	public UsuarioDTO(UsuarioEntity user) {
@@ -31,7 +31,7 @@ public class UsuarioDTO {
 		this.senha = user.getSenha();
 		this.email = user.getEmail();
 		this.nivel = user.getNivel();
-		this.departamentoId = new DepartamentoDTO().getId();
+		this.departamentoId = user.getDepartamento().getId();
 	}
 	
 
