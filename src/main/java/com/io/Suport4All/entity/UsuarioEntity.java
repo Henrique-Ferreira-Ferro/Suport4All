@@ -1,5 +1,7 @@
 package com.io.Suport4All.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +28,7 @@ public class UsuarioEntity {
 	@NotBlank
 	private String nivel;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_departamento")
 	private DepartamentoEntity departamento;
 	
