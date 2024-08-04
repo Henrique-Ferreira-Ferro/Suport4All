@@ -1,6 +1,6 @@
 package com.io.Suport4All.controller;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.io.Suport4All.entity.DepartamentoEntity;
+import com.io.Suport4All.dto.DepartamentoDTO;
 import com.io.Suport4All.service.DepartamentoService;
 
 @RestController
@@ -23,17 +23,22 @@ public class DepartamentoController {
 	private DepartamentoService service;
 	
 	@GetMapping("/{id}")
-	public Optional<DepartamentoEntity> findById(@PathVariable Long id){
+	public DepartamentoDTO findById(@PathVariable Long id){
 		return service.findDepartById(id);
 	}
 	
+	@GetMapping
+	public List<DepartamentoDTO> findAllDepart() {
+		return service.findAllDepart();
+	}
+	
 	@PostMapping("/create")
-	public DepartamentoEntity createDepart(@RequestBody DepartamentoEntity departamento) {
+	public DepartamentoDTO createDepart(@RequestBody DepartamentoDTO departamento) {
 		return service.createDepart(departamento);
 	}
 	
 	@PutMapping("/update/{id}")
-	public DepartamentoEntity updateDepartById(@RequestBody DepartamentoEntity departamento, @PathVariable Long id) {
+	public DepartamentoDTO updateDepartById(@RequestBody DepartamentoDTO departamento, @PathVariable Long id) {
 		return service.updateDepartById(departamento, id);
 	}
 	

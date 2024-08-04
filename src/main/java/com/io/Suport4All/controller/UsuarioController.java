@@ -25,12 +25,12 @@ public class UsuarioController {
 	private UsuarioService usuarioService;
 	
 	@GetMapping("/{id}")
-	public Optional<UsuarioEntity> findUserById(@PathVariable Long id){
+	public UsuarioDTO findUserById(@PathVariable Long id){
 		return usuarioService.findUserById(id);
 	}
 	
 	@GetMapping
-	public List<UsuarioEntity> findAllUsers(){
+	public List<UsuarioDTO> findAllUsers(){
 		return usuarioService.findAllUsers();
 	}
 
@@ -41,7 +41,7 @@ public class UsuarioController {
 
 	
 	@PutMapping("/update/{id}")
-	public UsuarioEntity updateUser(@RequestBody UsuarioEntity user, @PathVariable Long id) {
+	public UsuarioDTO updateUser(@RequestBody UsuarioDTO user, @PathVariable Long id) {
 		return usuarioService.updateUser(user, id);
 	}
 

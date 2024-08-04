@@ -1,5 +1,6 @@
 package com.io.Suport4All.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,20 +23,27 @@ public class UsuarioService {
 	private DepartamentoRepository departamentoRepository;
 	
 	//Encontrar por id
-	public Optional<UsuarioEntity> findUserById(Long id){
-		Optional<UsuarioEntity> user = usuarioRepository.findById(id);
-		if(user.isPresent()) {
-			return usuarioRepository.findById(id);
-		}else {
-			throw new RuntimeException("Usuario não encontrado");
-		}
+	public UsuarioDTO findUserById(Long id){
+		
+		UsuarioEntity user = usuarioRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+
+		return new UsuarioDTO(user);
+		
 	}
 	
 	
 	//Encontrar todos os usuarios
 	
-	public List<UsuarioEntity> findAllUsers(){
-		return usuarioRepository.findAll();
+	public List<UsuarioDTO> findAllUsers(){
+		List<UsuarioEntity>users = usuarioRepository.findAll();
+		List<UsuarioDTO> userDTOs = new ArrayList<>();
+		
+		for(UsuarioEntity user: users) {
+			userDTOs.add(new UsuarioDTO(user));
+		}
+		
+		return userDTOs;
 	}
 	
 	
@@ -48,6 +56,14 @@ public class UsuarioService {
 		if(departament.isEmpty()) {
 			throw new RuntimeException("O departamento não pode estar vaziu!");
 		}
+		
+		//Maneira mais eficiente de lançar uma exception, caso ocorra um erro!
+
+		
+		/*
+		 * DepartamentoEntity departamento = departamentoRepository.findAll(departId)
+		 * .orElseThrow(() -> new RuntimeException("O departamento não pode estar vaziu"))
+		 * */
 		
 		UsuarioEntity usuarioEnti = new UsuarioEntity();
 		usuarioEnti.setNome(user.getNome());
@@ -63,19 +79,22 @@ public class UsuarioService {
 	
 	
 	//Atualizar um usuario
-	public UsuarioEntity updateUser(UsuarioEntity user, Long id) {
-		Optional<UsuarioEntity> userFind = usuarioRepository.findById(id);
-		if(userFind.isPresent()) {
-			UsuarioEntity userMod = userFind.get();
-			userMod.setDepartamento(user.getDepartamento());
-			userMod.setEmail(user.getEmail());
-			userMod.setNivel(user.getNivel());
-			userMod.setNome(user.getNome());
-			userMod.setSenha(user.getSenha());
-			return usuarioRepository.save(userMod);
-		}else {
-			throw new RuntimeException("Problema ao tentar atualizar usuario");
-		}
+	public UsuarioDTO updateUser(UsuarioDTO user, Long id) {
+		UsuarioEntity userFind = usuarioRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
+		       
+			
+		userFind.setDepartamento(departamentoRepository.findById(user.getDepartamento())
+				.orElseThrow(() -> new RuntimeException("Departamento não encontrado!"))
+				);
+		
+			
+			userFind.setEmail(user.getEmail());
+			userFind.setNivel(user.getNivel());
+			userFind.setNome(user.getNome());
+			userFind.setSenha(user.getSenha());
+			return new UsuarioDTO(usuarioRepository.save(userFind));
+	
 		
 	}
 	

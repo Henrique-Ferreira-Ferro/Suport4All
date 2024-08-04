@@ -78,7 +78,7 @@ public class UsuarioDTO {
 	public Long getDepartamento() {
 		return departamentoId;
 	}
-
+	
 	public void setDepartamento(Long departamento) {
 		this.departamentoId = departamento;
 	}
