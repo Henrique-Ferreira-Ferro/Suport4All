@@ -1,64 +1,77 @@
 package com.io.Suport4All.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.io.Suport4All.dto.DepartamentoDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
+import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.repository.DepartamentoRepository;
+import com.io.Suport4All.repository.UsuarioRepository;
 
 @Service
 public class DepartamentoService {
-	
+
 	@Autowired
 	private DepartamentoRepository repositoryDepart;
-	
-	
-	public Optional<DepartamentoEntity> findDepartById(Long id) {
-		Optional<DepartamentoEntity> depart = repositoryDepart.findById(id);
-		if(!depart.isPresent()) {
-			throw new RuntimeException("Departamento não encontrado");
-		}else {
-			return repositoryDepart.findById(id);
-		}
-		
+
+	//Será usado no futuro
+	@Autowired
+	private UsuarioRepository repositoryUser;
+
+	public DepartamentoDTO findDepartById(Long id) {
+		DepartamentoEntity depart = repositoryDepart.findById(id)
+				.orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+		return new DepartamentoDTO(depart);
 	}
-	
-	
-	public DepartamentoEntity createDepart(DepartamentoEntity departamento) {
-		if(departamento.getNomeDepart().isBlank()) {
-			throw new RuntimeException("Não deixe o nome do departamento em branco");
+
+	public List<DepartamentoDTO> findAllDepart() {
+		List<DepartamentoEntity> departamentos = repositoryDepart.findAll();
+		List<DepartamentoDTO> departamentosDTOs = new ArrayList<DepartamentoDTO>();
+
+		for (DepartamentoEntity departamento : departamentos) {
+			departamentosDTOs.add(new DepartamentoDTO(departamento));
 		}
-		return repositoryDepart.save(departamento);
+		return departamentosDTOs;
+
 	}
-	
-	
-	
-	public DepartamentoEntity updateDepartById(DepartamentoEntity departamento, Long id){
-		Optional<DepartamentoEntity> depart = repositoryDepart.findById(id);
-		
-		if(depart.isPresent()) {
-			DepartamentoEntity modDepart = depart.get();
-			modDepart.setNomeDepart(departamento.getNomeDepart());
-			modDepart.setUsers(departamento.getUsers());
-			return repositoryDepart.save(modDepart);
-		}else {
-			throw new RuntimeException("Erro ao tentar atualizar departamento");
+
+	public DepartamentoDTO createDepart(DepartamentoDTO departamentoDTO) {
+
+		if (departamentoDTO.getNome().isBlank()) {
+			throw new RuntimeException("Não deixe o nome do departamento em branco!");
 		}
-		
+
+		DepartamentoEntity departamento = new DepartamentoEntity();
+		departamento.setNomeDepart(departamentoDTO.getNome());
+
+		DepartamentoEntity savedDepartamento = repositoryDepart.save(departamento);
+		return new DepartamentoDTO(savedDepartamento);
+
+	}
+
+	public DepartamentoDTO updateDepartById(DepartamentoDTO departamento, Long id) {
+
+		DepartamentoEntity depart = repositoryDepart.findById(id)
+				.orElseThrow(() -> new RuntimeException("Erro ao tentar encontrar o departamento!"));
+
+		depart.setNomeDepart(departamento.getNome());
+
+		DepartamentoEntity updatedDepartamento = repositoryDepart.save(depart);
+		return new DepartamentoDTO(updatedDepartamento);
+
 	}
 
 	public String deleteDepart(Long id) {
-		Optional<DepartamentoEntity> depart = repositoryDepart.findById(id);
-		if(depart.isPresent()) {
-			repositoryDepart.deleteById(id);
-			return "Departamento "+ depart.get().getNomeDepart()+ " deletado com sucesso!";
-		}else {
-			throw new RuntimeException("Erro ao tentar deletar o departamento");
-		}
-		
+		DepartamentoEntity depart = repositoryDepart.findById(id)
+				.orElseThrow(() -> new RuntimeException("Erro ao tentar deletar o departamento"));
+
+		repositoryDepart.deleteById(id);
+		return "Departamento " + depart.getNomeDepart() + " deletado com sucesso!";
 	}
-	
-	
+
 }

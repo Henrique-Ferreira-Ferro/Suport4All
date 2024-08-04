@@ -7,7 +7,6 @@ public class DepartamentoDTO {
 	private Long id;
 	private String nome;
 	
-	
 	public DepartamentoDTO() {
 		
 	}
@@ -16,11 +15,13 @@ public class DepartamentoDTO {
 		super();
 		this.id = id;
 		this.nome = nome;
+		
 	}
 	
 	public DepartamentoDTO(DepartamentoEntity departamento) {
 		this.id = departamento.getId();
 		this.nome = departamento.getNomeDepart();
+		
 	}
 	
 
@@ -39,9 +40,10 @@ public class DepartamentoDTO {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+
 	
 	
-	
-	
+
 	
 }
