@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
-@Table(name = "senha_geral")
+@Table(name = "Senhas")
 public class SenhasGeraisEntity {
 	
 	@Id
