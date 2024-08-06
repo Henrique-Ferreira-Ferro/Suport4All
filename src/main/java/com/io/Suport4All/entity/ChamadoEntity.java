@@ -1,8 +1,9 @@
 package com.io.Suport4All.entity;
 
 
-import java.sql.Blob;
 import java.util.Date;
+
+import com.io.Suport4All.enums.Extremidade;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class ChamadoEntity {
 	private String titulo;
 	private String descricao;
 	@NotBlank
-	private String prioridade;
+	private Extremidade prioridade;
 	@NotBlank
 	private Date data;
 	
@@ -33,7 +34,7 @@ public class ChamadoEntity {
 	private UsuarioEntity usuario;
 	
 	//Pesquisar como diabos vou implementar isso!
-	private Blob anexo;
+	private String anexo;
 	
 	
 	public Long getId() {
@@ -60,11 +61,11 @@ public class ChamadoEntity {
 		this.descricao = descricao;
 	}
 
-	public String getPrioridade() {
+	public Extremidade getPrioridade() {
 		return prioridade;
 	}
 
-	public void setPrioridade(String prioridade) {
+	public void setPrioridade(Extremidade prioridade) {
 		this.prioridade = prioridade;
 	}
 
@@ -76,11 +77,11 @@ public class ChamadoEntity {
 		this.data = data;
 	}
 
-	public Blob getAnexo() {
+	public String getAnexo() {
 		return anexo;
 	}
 
-	public void setAnexo(Blob anexo) {
+	public void setAnexo(String anexo) {
 		this.anexo = anexo;
 	}
 	

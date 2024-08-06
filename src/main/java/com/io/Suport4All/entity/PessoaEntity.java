@@ -1,5 +1,9 @@
 package com.io.Suport4All.entity;
 
+import com.io.Suport4All.enums.Niveis;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,8 +22,9 @@ public class PessoaEntity {
 	private String senha;
 	@NotBlank
 	private String email;
-	@NotBlank
-	private String nivel;
+
+	@Enumerated(value = EnumType.ORDINAL)
+	private Niveis nivel;
 	
 	
 	public PessoaEntity() {
@@ -28,7 +33,7 @@ public class PessoaEntity {
 
 
 	public PessoaEntity(Long id, @NotBlank String nome, @NotBlank String senha, @NotBlank String email,
-			@NotBlank String nivel) {
+			@NotBlank Niveis nivel) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -78,12 +83,12 @@ public class PessoaEntity {
 	}
 
 
-	public String getNivel() {
+	public Niveis getNivel() {
 		return nivel;
 	}
 
 
-	public void setNivel(String nivel) {
+	public void setNivel(Niveis nivel) {
 		this.nivel = nivel;
 	}
 	
