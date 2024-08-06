@@ -17,20 +17,9 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Table(name = "usuario")
-public class UsuarioEntity {
+@Table(name = "Usuario")
+public class UsuarioEntity extends PessoaEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@NotBlank
-	private String nome;
-	@NotBlank
-	private String senha;
-	@NotBlank
-	private String email;
-	@NotBlank
-	private String nivel;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_departamento")
@@ -52,67 +41,6 @@ public class UsuarioEntity {
 		
 	}
 
-
-	public UsuarioEntity(Long id, @NotBlank String nome, @NotBlank String senha, @NotBlank String email,
-			@NotBlank String nivel, DepartamentoEntity departamento) {
-		super();
-		this.id = id;
-		this.nome = nome;
-		this.senha = senha;
-		this.email = email;
-		this.nivel = nivel;
-		this.departamento = departamento;
-	}
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getNome() {
-		return nome;
-	}
-
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
-	public String getSenha() {
-		return senha;
-	}
-
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-
-	public String getNivel() {
-		return nivel;
-	}
-
-
-	public void setNivel(String nivel) {
-		this.nivel = nivel;
-	}
 
 
 	public DepartamentoEntity getDepartamento() {

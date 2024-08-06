@@ -12,10 +12,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
+
 @Entity
 @Table(name = "Senhas")
 public class SenhasGeraisEntity {
@@ -31,6 +28,59 @@ public class SenhasGeraisEntity {
 	private String email;
 	@NotBlank
 	private String senha;
+	
 	private String descricao;
+	
+	public SenhasGeraisEntity(Long id, @NotBlank String origem, @NotBlank String login, @Email String email,
+			@NotBlank String senha, String descricao) {
+		super();
+		this.id = id;
+		this.origem = origem;
+		this.login = login;
+		this.email = email;
+		this.senha = senha;
+		this.descricao = descricao;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getOrigem() {
+		return origem;
+	}
+	public void setOrigem(String origem) {
+		this.origem = origem;
+	}
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getSenha() {
+		return senha;
+	}
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	public String getDescricao() {
+		return descricao;
+	}
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
+	
+	
+	
 	
 }

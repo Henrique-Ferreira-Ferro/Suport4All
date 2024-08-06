@@ -11,19 +11,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Table(name = "tecnico")
-public class TecnicoEntity extends UsuarioEntity{
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+@Table(name = "Tecnico")
+public class TecnicoEntity extends PessoaEntity{
 	
 	
 	private String especialidade;
+
+	public String getEspecialidade() {
+		return especialidade;
+	}
+
+	public void setEspecialidade(String especialidade) {
+		this.especialidade = especialidade;
+	}
+	
+	
+	
 	
 }

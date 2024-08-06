@@ -12,17 +12,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@AllArgsConstructor
-@Setter
-@Getter
-@NoArgsConstructor
 @Entity
-@Table(name = "chamado")
+@Table(name = "Chamado")
 public class ChamadoEntity {
 	
 	@Id
@@ -42,10 +34,6 @@ public class ChamadoEntity {
 	
 	//Pesquisar como diabos vou implementar isso!
 	private Blob anexo;
-
-	//Um chamado está associado a apenas 1 unico usuario
-//	private UsuarioEntity usuario;
-	
 	
 	
 	public Long getId() {
