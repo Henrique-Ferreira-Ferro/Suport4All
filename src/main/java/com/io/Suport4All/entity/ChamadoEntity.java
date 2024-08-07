@@ -1,11 +1,16 @@
 package com.io.Suport4All.entity;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.io.Suport4All.enums.Extremidade;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,10 +29,11 @@ public class ChamadoEntity {
 	@NotBlank
 	private String titulo;
 	private String descricao;
+	@Enumerated(value = EnumType.ORDINAL)
+	private Extremidade extremidade;
 	@NotBlank
-	private Extremidade prioridade;
-	@NotBlank
-	private Date data;
+	@DateTimeFormat(pattern =  "dd/MM/yyyy")
+	private LocalDateTime data;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -61,19 +67,19 @@ public class ChamadoEntity {
 		this.descricao = descricao;
 	}
 
-	public Extremidade getPrioridade() {
-		return prioridade;
+	public Extremidade getExtremidade() {
+		return extremidade;
 	}
 
-	public void setPrioridade(Extremidade prioridade) {
-		this.prioridade = prioridade;
+	public void setExtremidade(Extremidade extremidade) {
+		this.extremidade = extremidade;
 	}
 
-	public Date getData() {
+	public LocalDateTime getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(LocalDateTime data) {
 		this.data = data;
 	}
 
@@ -83,6 +89,14 @@ public class ChamadoEntity {
 
 	public void setAnexo(String anexo) {
 		this.anexo = anexo;
+	}
+
+	public UsuarioEntity getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioEntity usuario) {
+		this.usuario = usuario;
 	}
 	
 	
