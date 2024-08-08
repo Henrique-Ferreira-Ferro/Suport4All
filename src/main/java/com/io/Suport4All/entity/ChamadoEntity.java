@@ -1,11 +1,13 @@
 package com.io.Suport4All.entity;
 
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.io.Suport4All.enums.Extremidade;
 
 import jakarta.persistence.Entity;
@@ -31,9 +33,9 @@ public class ChamadoEntity {
 	private String descricao;
 	@Enumerated(value = EnumType.ORDINAL)
 	private Extremidade extremidade;
-	@NotBlank
-	@DateTimeFormat(pattern =  "dd/MM/yyyy")
-	private LocalDateTime data;
+	
+	@JsonFormat(pattern =  "dd/MM/yyyy")
+	private LocalDate data;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -75,11 +77,11 @@ public class ChamadoEntity {
 		this.extremidade = extremidade;
 	}
 
-	public LocalDateTime getData() {
+	public LocalDate getData() {
 		return data;
 	}
 
-	public void setData(LocalDateTime data) {
+	public void setData(LocalDate data) {
 		this.data = data;
 	}
 
