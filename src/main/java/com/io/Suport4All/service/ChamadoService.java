@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.ChamadoDTO;
-import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.repository.ChamadoRepository;

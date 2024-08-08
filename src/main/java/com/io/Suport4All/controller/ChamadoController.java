@@ -22,7 +22,7 @@ public class ChamadoController {
 	
 	
 	//Salvar/criar um chamado
-	@PostMapping("/create")
+	@PostMapping(value ="/create", consumes = {"multipart/form-data"})
 	public ChamadoDTO createChamado
 	(@RequestBody ChamadoDTO chamadoDto, @RequestParam("file") MultipartFile arquivo) {
 		

@@ -1,8 +1,8 @@
 package com.io.Suport4All.dto;
 
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.enums.Extremidade;
 
@@ -12,7 +12,8 @@ public class ChamadoDTO {
 	private String titulo;
 	private String descricao;
 	private Extremidade extremidade;
-	private LocalDateTime date;
+	@JsonFormat(pattern =  "dd/MM/yyyy")
+	private LocalDate date;
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
 	private Long usuarioId;
 	private String anexo;
@@ -21,7 +22,7 @@ public class ChamadoDTO {
 		
 	}
 
-	public ChamadoDTO(Long id, String titulo, String descricao, Extremidade extremidade, LocalDateTime date, Long usuarioId,
+	public ChamadoDTO(Long id, String titulo, String descricao, Extremidade extremidade, LocalDate date, Long usuarioId,
 			String anexo) {
 		this.id = id;
 		this.titulo = titulo;
@@ -75,11 +76,11 @@ public class ChamadoDTO {
 		this.extremidade = extremidade;
 	}
 
-	public LocalDateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
