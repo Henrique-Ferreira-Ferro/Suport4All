@@ -11,7 +11,7 @@ public class ChamadoDTO {
 	private Long id;
 	private String titulo;
 	private String descricao;
-	private Extremidade extremidade;
+	private Integer extremidade;
 	@JsonFormat(pattern =  "dd/MM/yyyy")
 	private LocalDate date;
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
@@ -22,7 +22,7 @@ public class ChamadoDTO {
 		
 	}
 
-	public ChamadoDTO(Long id, String titulo, String descricao, Extremidade extremidade, LocalDate date, Long usuarioId,
+	public ChamadoDTO(Long id, String titulo, String descricao, Integer extremidade, LocalDate date, Long usuarioId,
 			String anexo) {
 		this.id = id;
 		this.titulo = titulo;
@@ -38,7 +38,8 @@ public class ChamadoDTO {
 		this.id = chamadoEntity.getId();
 		this.titulo = chamadoEntity.getTitulo();
 		this.descricao = chamadoEntity.getDescricao();
-		this.extremidade = chamadoEntity.getExtremidade();
+		//Necessito verificar melhor essa parte para estudos
+		this.extremidade = chamadoEntity.getExtremidade() != null ? chamadoEntity.getExtremidade().ordinal() : null;
 		this.date = chamadoEntity.getData();
 		this.usuarioId = chamadoEntity.getUsuario().getId();
 		this.anexo = chamadoEntity.getAnexo();
@@ -68,11 +69,11 @@ public class ChamadoDTO {
 		this.descricao = descricao;
 	}
 
-	public Extremidade getExtremidade() {
+	public Integer getExtremidade() {
 		return extremidade;
 	}
 
-	public void setExtremidade(Extremidade extremidade) {
+	public void setExtremidade(Integer extremidade) {
 		this.extremidade = extremidade;
 	}
 

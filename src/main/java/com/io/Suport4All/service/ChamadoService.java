@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.io.Suport4All.dto.ChamadoDTO;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
+import com.io.Suport4All.enums.Extremidade;
 import com.io.Suport4All.repository.ChamadoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -38,7 +39,7 @@ public class ChamadoService {
 	//Erro com a data
 	//Erro com o anexo
 	//Erro com o usuario que está sendo passado
-	public ChamadoDTO createChamado(ChamadoDTO chamadoDto,  @RequestParam("file") MultipartFile arquivo) {
+	public ChamadoDTO createChamado(ChamadoDTO chamadoDto,  MultipartFile arquivo) {
 		Long UsuarioId = chamadoDto.getUsuarioId();
 		
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(UsuarioId);
@@ -50,9 +51,9 @@ public class ChamadoService {
 		try {
 			if(!arquivo.isEmpty()) {
 				byte[] bytes = arquivo.getBytes();
-				Path caminho = Paths.get(caminhoImagem+String.valueOf(chamadoDto.getId())+ arquivo.getOriginalFilename());
+				Path caminho = Paths.get(caminhoImagem, String.valueOf(arquivo.getOriginalFilename()));
 				Files.write(caminho, bytes);
-				String nomeImage = String.valueOf(chamadoDto.getId())+ arquivo.getOriginalFilename();
+				String nomeImage = String.valueOf(arquivo.getOriginalFilename());
 				chamadoDto.setAnexo(nomeImage);
 				
 			}
@@ -64,7 +65,9 @@ public class ChamadoService {
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
 		chamadoEnt.setData(chamadoDto.getDate());
-		chamadoEnt.setExtremidade(chamadoDto.getExtremidade());
+		//Aqui convertemos de valor numerico para enum
+		//Necessario pesquisar
+		chamadoEnt.setExtremidade(Extremidade.values()[chamadoDto.getExtremidade()]);
 		chamadoEnt.setUsuario(usuario.get());
 		chamadoEnt = chamadoRepository.save(chamadoEnt);
 		return new ChamadoDTO(chamadoEnt);
