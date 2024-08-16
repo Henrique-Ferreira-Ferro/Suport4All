@@ -22,7 +22,7 @@ import com.io.Suport4All.repository.UsuarioRepository;
 public class ChamadoService {
 
 	
-	private static String caminhoImagem = "C:/Users/Henrique/Documents/Java/Suport4All/src/main/resources/images";
+	private static String caminhoImagem = "C:\\Users\\Henrique\\Documents\\Java\\Suport4All\\src\\main\\resources\\images";
 
 	@Autowired
 	private ChamadoRepository chamadoRepository;
@@ -49,7 +49,7 @@ public class ChamadoService {
 		}
 		
 		try {
-			if(!arquivo.isEmpty()) {
+			if(arquivo != null && !arquivo.isEmpty()) {
 				byte[] bytes = arquivo.getBytes();
 				Path caminho = Paths.get(caminhoImagem, String.valueOf(arquivo.getOriginalFilename()));
 				Files.write(caminho, bytes);
