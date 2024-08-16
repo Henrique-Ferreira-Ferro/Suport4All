@@ -22,7 +22,7 @@ import com.io.Suport4All.repository.UsuarioRepository;
 public class ChamadoService {
 
 	
-	private static String caminhoImagem = "C:\\Users\\Henrique\\Documents\\Java\\Suport4All\\src\\main\\resources\\images";
+	private static String caminhoImagem = "C:\\Users\\Henrique\\Documents\\Desenvolvimento Web\\imgTemp";
 
 	@Autowired
 	private ChamadoRepository chamadoRepository;
@@ -50,11 +50,16 @@ public class ChamadoService {
 		
 		try {
 			if(arquivo != null && !arquivo.isEmpty()) {
-				byte[] bytes = arquivo.getBytes();
-				Path caminho = Paths.get(caminhoImagem, String.valueOf(arquivo.getOriginalFilename()));
-				Files.write(caminho, bytes);
-				String nomeImage = String.valueOf(arquivo.getOriginalFilename());
-				chamadoDto.setAnexo(nomeImage);
+				Path diretorio = Paths.get(caminhoImagem);
+				if(!Files.exists(diretorio)) {
+					Files.createDirectories(diretorio);
+				}
+				
+	// Path caminhoArquivo = diretorio.resolve(arquivo.getOriginalFilename());
+				Path caminhoArquivo = diretorio.resolve(arquivo.getOriginalFilename());
+				
+				Files.copy(arquivo.getInputStream(), caminhoArquivo);
+				
 				
 			}
 		}catch(IOException e){
@@ -69,6 +74,7 @@ public class ChamadoService {
 		//Necessario pesquisar
 		chamadoEnt.setExtremidade(Extremidade.values()[chamadoDto.getExtremidade()]);
 		chamadoEnt.setUsuario(usuario.get());
+		chamadoDto.setAnexo(arquivo.getOriginalFilename());
 		chamadoEnt = chamadoRepository.save(chamadoEnt);
 		return new ChamadoDTO(chamadoEnt);
 	
