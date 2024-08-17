@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,76 +23,69 @@ import com.io.Suport4All.repository.UsuarioRepository;
 @Service
 public class ChamadoService {
 
-	
-	private static String caminhoImagem = "C:\\Users\\Henrique\\Documents\\Desenvolvimento Web\\imgTemp";
-
 	@Autowired
 	private ChamadoRepository chamadoRepository;
-	
+
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+
+	@Value("${spring.servlet.multipart.location}")
+	private String raiz;
+
+	@Value("${contato.disco.diretorio-fotos}")
+	private String diretorioFotos;
 
 	// Encontrar um chamado por ID
 
 	// Encontrar todos os chamados criados
 
 	// Criar um chamado associando a um usuario
-	//Coisas que provavelmente vão ocorrer de erro:
-	//Erro com a data
-	//Erro com o anexo
-	//Erro com o usuario que está sendo passado
-	public ChamadoDTO createChamado(ChamadoDTO chamadoDto,  MultipartFile arquivo) {
+
+	public ChamadoDTO createChamado(ChamadoDTO chamadoDto, MultipartFile arquivo) {
 		Long UsuarioId = chamadoDto.getUsuarioId();
-		
+
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(UsuarioId);
-		
-		if(usuario.isEmpty()) {
+
+		if (usuario.isEmpty()) {
 			throw new RuntimeException("O chamado deve estar associado a um Usuario ou técnico");
 		}
-		
-		try {
-			if(arquivo != null && !arquivo.isEmpty()) {
-				Path diretorio = Paths.get(caminhoImagem);
-				if(!Files.exists(diretorio)) {
-					Files.createDirectories(diretorio);
-				}
-				
-	// Path caminhoArquivo = diretorio.resolve(arquivo.getOriginalFilename());
-				Path caminhoArquivo = diretorio.resolve(arquivo.getOriginalFilename());
-				
-				Files.copy(arquivo.getInputStream(), caminhoArquivo);
-				
-				
-			}
-		}catch(IOException e){
-			throw new RuntimeException("Erro ao tentar salvar o arquivo"+ e.getMessage());
+
+		if (arquivo != null && !arquivo.isEmpty()) {
+			salvarArquivo(diretorioFotos, arquivo);
+			chamadoDto.setAnexo(arquivo.getOriginalFilename());
 		}
-		
+
 		ChamadoEntity chamadoEnt = new ChamadoEntity();
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
 		chamadoEnt.setData(chamadoDto.getDate());
-		//Aqui convertemos de valor numerico para enum
-		//Necessario pesquisar
+		// Aqui convertemos de valor numerico para enum
+		// Necessario pesquisar
 		chamadoEnt.setExtremidade(Extremidade.values()[chamadoDto.getExtremidade()]);
 		chamadoEnt.setUsuario(usuario.get());
-		chamadoDto.setAnexo(arquivo.getOriginalFilename());
 		chamadoEnt = chamadoRepository.save(chamadoEnt);
 		return new ChamadoDTO(chamadoEnt);
-	
+
 	}
-	
 
-	
-	
-	//Atualizar um chamado associando a um usuario e passando o id do chamado
-	//Nota, não deve ser possivel alterar nada além dos status do chamado
-	
-	
-	//Deletar chamado? Acredito que isso não deve ser implementado segundo os requisitos do sistema que será feito
-	//Por questões de auditoria
-	
+	private void salvarArquivo(String diretorio, MultipartFile arquivo) {
+		Path diretorioPath = Paths.get(raiz, diretorio);
+		Path arquivoPath = diretorioPath.resolve(arquivo.getOriginalFilename());
+		try {
+			Files.createDirectories(diretorioPath);
+			arquivo.transferTo(arquivoPath.toFile());
 
-	
-	
+		} catch (IOException e) {
+			throw new RuntimeException("Erro ao tentar salvar o arquivo: ");
+		}
+
+	}
+
+	// Atualizar um chamado associando a um usuario e passando o id do chamado
+	// Nota, não deve ser possivel alterar nada além dos status do chamado
+
+	// Deletar chamado? Acredito que isso não deve ser implementado segundo os
+	// requisitos do sistema que será feito
+	// Por questões de auditoria
+
 }
