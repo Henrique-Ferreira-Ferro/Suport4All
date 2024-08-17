@@ -12,26 +12,21 @@ import org.springframework.web.multipart.MultipartFile;
 import com.io.Suport4All.dto.ChamadoDTO;
 import com.io.Suport4All.service.ChamadoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/chamado")
 public class ChamadoController {
-	
-	
-	
+
 	@Autowired
 	private ChamadoService chamadoService;
-	
-	
-	//Salvar/criar um chamado
-	@PostMapping(value ="/create", consumes = {"multipart/form-data"})
-	public ChamadoDTO createChamado
-	(@ModelAttribute ChamadoDTO chamadoDto, @RequestParam(value = "file", required = false) MultipartFile arquivo) {
-		
-		return chamadoService.createChamado(chamadoDto, arquivo);
+
+	// Salvar/criar um chamado
+	@PostMapping(value = "/create", consumes = { "multipart/form-data" })
+	public ChamadoDTO createChamado(@Valid ChamadoDTO chamadoDto,
+			@RequestParam(value = "anexo", required = false) MultipartFile anexo) {
+
+		return chamadoService.createChamado(chamadoDto, anexo);
 	}
-	
-	
-	
-	
-	
+
 }

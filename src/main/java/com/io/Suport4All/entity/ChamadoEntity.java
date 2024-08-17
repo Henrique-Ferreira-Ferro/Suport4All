@@ -44,7 +44,25 @@ public class ChamadoEntity {
 	//Pesquisar como diabos vou implementar isso!
 	private String anexo;
 	
+	public ChamadoEntity() {
+		
+	}
 	
+	
+	public ChamadoEntity(Long id, @NotBlank String titulo, String descricao, Extremidade extremidade, LocalDate data,
+			UsuarioEntity usuario, String anexo) {
+		super();
+		this.id = id;
+		this.titulo = titulo;
+		this.descricao = descricao;
+		this.extremidade = extremidade;
+		this.data = data;
+		this.usuario = usuario;
+		this.anexo = anexo;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
