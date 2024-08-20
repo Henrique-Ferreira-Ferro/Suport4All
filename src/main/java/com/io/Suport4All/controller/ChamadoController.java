@@ -3,11 +3,8 @@ package com.io.Suport4All.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.ChamadoDTO;
 import com.io.Suport4All.service.ChamadoService;
@@ -22,11 +19,10 @@ public class ChamadoController {
 	private ChamadoService chamadoService;
 
 	// Salvar/criar um chamado
-	@PostMapping(value = "/create", consumes = { "multipart/form-data" })
-	public ChamadoDTO createChamado(@Valid ChamadoDTO chamadoDto,
-			@RequestParam(value = "anexo", required = false) MultipartFile anexo) {
+	@PostMapping(value = "/create")
+	public ChamadoDTO createChamado(@ModelAttribute @Valid ChamadoDTO chamadoDTO) {
 
-		return chamadoService.createChamado(chamadoDto, anexo);
+		return chamadoService.createChamado(chamadoDTO);
 	}
 
 }

@@ -2,9 +2,10 @@ package com.io.Suport4All.dto;
 
 import java.time.LocalDate;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.io.Suport4All.entity.ChamadoEntity;
-import com.io.Suport4All.enums.Extremidade;
 
 public class ChamadoDTO {
 	
@@ -16,14 +17,14 @@ public class ChamadoDTO {
 	private LocalDate date;
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
 	private Long usuarioId;
-	private String anexo;
+    private MultipartFile anexo;
 	
 	public ChamadoDTO() {
 		
 	}
 
 	public ChamadoDTO(Long id, String titulo, String descricao, Integer extremidade, LocalDate date, Long usuarioId,
-			String anexo) {
+			MultipartFile anexo) {
 		this.id = id;
 		this.titulo = titulo;
 		this.descricao = descricao;
@@ -42,7 +43,7 @@ public class ChamadoDTO {
 		this.extremidade = chamadoEntity.getExtremidade() != null ? chamadoEntity.getExtremidade().ordinal() : null;
 		this.date = chamadoEntity.getData();
 		this.usuarioId = chamadoEntity.getUsuario().getId();
-		this.anexo = chamadoEntity.getAnexo();
+		this.anexo = null;
 	}
 
 	public Long getId() {
@@ -93,11 +94,11 @@ public class ChamadoDTO {
 		this.usuarioId = usuarioId;
 	}
 
-	public String getAnexo() {
+	public MultipartFile getAnexo() {
 		return anexo;
 	}
 
-	public void setAnexo(String anexo) {
+	public void setAnexo(MultipartFile anexo) {
 		this.anexo = anexo;
 	}
 	
