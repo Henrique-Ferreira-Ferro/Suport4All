@@ -51,10 +51,12 @@ public class ChamadoService {
 		}
 
 		if (arquivo != null && !arquivo.isEmpty()) {
+			System.out.println("Entrou no if");
 			salvarArquivo(diretorioFotos, arquivo);
 			chamadoDto.setAnexo(arquivo.getOriginalFilename());
+			System.out.println(arquivo.getOriginalFilename());
 		}
-
+		
 		ChamadoEntity chamadoEnt = new ChamadoEntity();
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
@@ -76,7 +78,8 @@ public class ChamadoService {
 			arquivo.transferTo(arquivoPath.toFile());
 
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao tentar salvar o arquivo: ");
+			e.printStackTrace();
+			throw new RuntimeException("Erro ao tentar salvar o arquivo: " + e.getMessage());
 		}
 
 	}
