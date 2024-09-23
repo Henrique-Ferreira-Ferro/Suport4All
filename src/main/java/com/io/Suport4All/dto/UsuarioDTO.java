@@ -1,7 +1,7 @@
 package com.io.Suport4All.dto;
 
 import com.io.Suport4All.entity.UsuarioEntity;
-import com.io.Suport4All.enums.Niveis;
+import com.io.Suport4All.enums.UserRole;
 
 public class UsuarioDTO {
 	
@@ -9,14 +9,14 @@ public class UsuarioDTO {
 	private String nome;
 	private String senha;
 	private String email;
-	private Niveis nivel;
+	private UserRole nivel;
 	private Long departamentoId;
 	
 	public UsuarioDTO() {
 		
 	}
 
-	public UsuarioDTO(Long id, String nome, String senha, String email, Niveis nivel, Long departamentoId) {
+	public UsuarioDTO(Long id, String nome, String senha, String email, UserRole nivel, Long departamentoId) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -68,11 +68,11 @@ public class UsuarioDTO {
 		this.email = email;
 	}
 
-	public Niveis getNivel() {
+	public UserRole getNivel() {
 		return nivel;
 	}
 
-	public void setNivel(Niveis nivel) {
+	public void setNivel(UserRole nivel) {
 		this.nivel = nivel;
 	}
 

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
-import com.io.Suport4All.enums.Niveis;
+import com.io.Suport4All.enums.UserRole;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 

@@ -18,7 +18,8 @@ public class ChamadoDTO {
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
 	private Long usuarioId;
     private MultipartFile anexo;
-	
+    
+    
 	public ChamadoDTO() {
 		
 	}
@@ -43,8 +44,8 @@ public class ChamadoDTO {
 		this.extremidade = chamadoEntity.getExtremidade() != null ? chamadoEntity.getExtremidade().ordinal() : null;
 		this.date = chamadoEntity.getData();
 		this.usuarioId = chamadoEntity.getUsuario().getId();
-		this.anexo = null;
 	}
+	
 
 	public Long getId() {
 		return id;
