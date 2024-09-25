@@ -2,6 +2,7 @@ package com.io.Suport4All.entity;
 
 import com.io.Suport4All.enums.UserRole;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -25,8 +26,9 @@ public class PessoaEntity {
 	@NotBlank
 	private String email;
 
-	@Enumerated(value = EnumType.ORDINAL)
-	private UserRole nivel;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "role", nullable = false)
+	private UserRole role;
 	
 	
 	

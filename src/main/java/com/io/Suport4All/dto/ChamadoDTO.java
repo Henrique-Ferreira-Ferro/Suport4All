@@ -6,13 +6,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.io.Suport4All.entity.ChamadoEntity;
+import com.io.Suport4All.enums.Extremidade;
 
 public class ChamadoDTO {
 	
 	private Long id;
 	private String titulo;
 	private String descricao;
-	private Integer extremidade;
+	private Extremidade extremidade;
 	@JsonFormat(pattern =  "dd/MM/yyyy")
 	private LocalDate date;
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
@@ -24,7 +25,7 @@ public class ChamadoDTO {
 		
 	}
 
-	public ChamadoDTO(Long id, String titulo, String descricao, Integer extremidade, LocalDate date, Long usuarioId,
+	public ChamadoDTO(Long id, String titulo, String descricao, Extremidade extremidade, LocalDate date, Long usuarioId,
 			MultipartFile anexo) {
 		this.id = id;
 		this.titulo = titulo;
@@ -41,7 +42,7 @@ public class ChamadoDTO {
 		this.titulo = chamadoEntity.getTitulo();
 		this.descricao = chamadoEntity.getDescricao();
 		//Necessito verificar melhor essa parte para estudos
-		this.extremidade = chamadoEntity.getExtremidade() != null ? chamadoEntity.getExtremidade().ordinal() : null;
+		this.extremidade = chamadoEntity.getExtremidade() ;
 		this.date = chamadoEntity.getData();
 		this.usuarioId = chamadoEntity.getUsuario().getId();
 	}
@@ -71,11 +72,11 @@ public class ChamadoDTO {
 		this.descricao = descricao;
 	}
 
-	public Integer getExtremidade() {
+	public Extremidade getExtremidade() {
 		return extremidade;
 	}
 
-	public void setExtremidade(Integer extremidade) {
+	public void setExtremidade(Extremidade extremidade) {
 		this.extremidade = extremidade;
 	}
 

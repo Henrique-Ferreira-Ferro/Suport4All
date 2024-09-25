@@ -55,7 +55,7 @@ public class ChamadoService {
 		chamadoEnt.setData(chamadoDto.getDate());
 		// Aqui convertemos de valor numerico para enum
 		// Necessario pesquisar
-		chamadoEnt.setExtremidade(Extremidade.values()[chamadoDto.getExtremidade()]);
+		chamadoEnt.setExtremidade(chamadoDto.getExtremidade());
 		chamadoEnt.setUsuario(usuario.get());
 		
 		MultipartFile anexo = chamadoDto.getAnexo();

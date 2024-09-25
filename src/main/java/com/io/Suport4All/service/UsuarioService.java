@@ -48,7 +48,7 @@ public class UsuarioService {
 
 	// Criar um usuario
 	public UsuarioDTO createUser(UsuarioDTO user) {
-		Long departId = user.getDepartamento();
+		Long departId = user.getDepartamentoId();
 
 		Optional<DepartamentoEntity> departament = departamentoRepository.findById(departId);
 
@@ -63,7 +63,7 @@ public class UsuarioService {
 		 * .orElseThrow(() -> new
 		 * RuntimeException("O departamento não pode estar vaziu"))
 		 */
-		if(user.getNivel().ordinal() != 0) {
+		if(user.getRole().name() != "USER" || user.getRole() == null) {
 			throw new RuntimeException("Somente nivel USUARIO!");
 		}
 		
@@ -71,7 +71,7 @@ public class UsuarioService {
 		usuarioEnti.setNome(user.getNome());
 		usuarioEnti.setSenha(user.getSenha());
 		usuarioEnti.setEmail(user.getEmail());
-		usuarioEnti.setNivel(user.getNivel());
+		usuarioEnti.setRole(user.getRole());
 		usuarioEnti.setDepartamento(departament.get());
 		usuarioEnti = usuarioRepository.save(usuarioEnti);
 		return new UsuarioDTO(usuarioEnti);
@@ -83,11 +83,11 @@ public class UsuarioService {
 		UsuarioEntity userFind = usuarioRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
 
-		userFind.setDepartamento(departamentoRepository.findById(user.getDepartamento())
+		userFind.setDepartamento(departamentoRepository.findById(user.getDepartamentoId())
 				.orElseThrow(() -> new RuntimeException("Departamento não encontrado!")));
 
 		userFind.setEmail(user.getEmail());
-		userFind.setNivel(user.getNivel());
+		userFind.setRole(user.getRole());
 		userFind.setNome(user.getNome());
 		userFind.setSenha(user.getSenha());
 		return new UsuarioDTO(usuarioRepository.save(userFind));
