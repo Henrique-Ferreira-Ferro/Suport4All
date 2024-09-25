@@ -2,7 +2,7 @@ package com.io.Suport4All.enums;
 
 public enum UserRole {
 	
-	ADMIN("admin"),
+	ADMIN("Admin"),
 	USER("Usuario");
 	
 	private String name;

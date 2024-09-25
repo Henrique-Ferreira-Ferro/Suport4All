@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.io.Suport4All.enums.Extremidade;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,7 +32,8 @@ public class ChamadoEntity {
 	@NotBlank
 	private String titulo;
 	private String descricao;
-	@Enumerated(value = EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	private Extremidade extremidade;
 	
 	@JsonFormat(pattern =  "dd/MM/yyyy")
@@ -41,7 +43,6 @@ public class ChamadoEntity {
 	@JoinColumn(name = "usuario_id")
 	private UsuarioEntity usuario;
 	
-	//Pesquisar como diabos vou implementar isso!
 	private String anexo;
 	
 	public ChamadoEntity() {
