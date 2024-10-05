@@ -1,5 +1,6 @@
 package com.io.Suport4All.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,7 @@ public class ChamadoController {
 
 		return chamadoService.openChamado(chamadoDTO);
 	}
-	
-	
+
 	@PutMapping("/update/{id}")
 	public ChamadoDTO editChamado(@RequestBody @Valid ChamadoUpdateDTO chamadoDTO, @PathVariable Long id) {
 		return chamadoService.updateChamado(chamadoDTO, id);
@@ -43,5 +43,17 @@ public class ChamadoController {
 		return chamadoService.findAll();
 	}
 
+	@GetMapping("/date")
+	public List<ChamadoDTO> findByDate(@RequestBody ChamadoDTO chamadoDTO) {
+		LocalDate data = chamadoDTO.getDate(); // Spring faz a conversão automática de String para LocalDate
+		return chamadoService.findByDate(data);
+	}
+
+	@GetMapping("/titulo")
+	public List<ChamadoDTO> findByTitulo(@RequestBody ChamadoDTO chamadoDTO){
+		return chamadoService.findByTitulo(chamadoDTO.getTitulo());
+	}
+
+	
 	
 }
