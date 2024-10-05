@@ -63,9 +63,6 @@ public class UsuarioService {
 		 * .orElseThrow(() -> new
 		 * RuntimeException("O departamento não pode estar vaziu"))
 		 */
-		if(user.getRole().name() != "USER" || user.getRole() == null) {
-			throw new RuntimeException("Somente nivel USUARIO!");
-		}
 		
 		UsuarioEntity usuarioEnti = new UsuarioEntity();
 		usuarioEnti.setNome(user.getNome());

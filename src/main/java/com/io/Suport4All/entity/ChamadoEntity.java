@@ -8,6 +8,7 @@ import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.io.Suport4All.enums.ChamadoStatus;
 import com.io.Suport4All.enums.Extremidade;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,10 @@ public class ChamadoEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Extremidade extremidade;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private ChamadoStatus status;
 	
 	@JsonFormat(pattern =  "dd/MM/yyyy")
 	private LocalDate data;
@@ -118,6 +123,16 @@ public class ChamadoEntity {
 
 	public void setUsuario(UsuarioEntity usuario) {
 		this.usuario = usuario;
+	}
+
+
+	public ChamadoStatus getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(ChamadoStatus status) {
+		this.status = status;
 	}
 	
 	
