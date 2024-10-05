@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -85,6 +86,11 @@ public class ChamadoService {
 		}
 		UsuarioEntity userFind = usuarioEntity.get();
 		
+		if(chamadoEnt.get().getStatus().toString().equals("FECHADO")) {
+			throw new RuntimeException("Não é possivel editar um chamado Fechado!");
+		}
+		
+		
 		if(!userFind.getRole().toString().equals("ADMIN")) {
 			throw new RuntimeException("Somente os Tecnicos podem editar os Chamados!");
 		}
@@ -106,6 +112,55 @@ public class ChamadoService {
 		
 		for (ChamadoEntity chamadoE : chamadoEnt) {
 			chamadoDto.add(new ChamadoDTO(chamadoE));
+		}
+		
+		return chamadoDto;
+		
+	}
+	
+	
+	public List<ChamadoDTO> findByDate(LocalDate date){
+		
+		List<ChamadoEntity> chamadosEnt = chamadoRepository.findByData(date);
+		
+		List<ChamadoDTO> chamadoDto = new ArrayList<>();
+		
+		if(chamadosEnt.isEmpty()) {
+			throw new RuntimeException("Nenhum chamado encontrado nessa data!"+ date);
+		}
+		
+		for (ChamadoEntity chamaFind : chamadosEnt) {
+			chamadoDto.add(new ChamadoDTO(chamaFind));
+		}
+		
+		return chamadoDto;
+		
+	}
+	
+	//Find by id
+	
+	public ChamadoDTO findById(Long id){
+		
+		ChamadoEntity chamado = chamadoRepository.findById(id).orElseThrow(() -> new RuntimeException("Não foi possivel encontrar o chamado!"));
+		
+		return new ChamadoDTO(chamado);
+	}
+	
+	
+	//Find by titulo
+	
+	public List<ChamadoDTO> findByTitulo(String titulo){
+		
+		List<ChamadoEntity> chamadoEnt = chamadoRepository.findByTitulo(titulo);
+		
+		List<ChamadoDTO> chamadoDto = new ArrayList<>();
+		
+		if(chamadoEnt.isEmpty()) {
+			throw new RuntimeException("Nenhum chamado encontrado com esse titulo! " + titulo);
+		}
+		
+		for(ChamadoEntity chamaFind: chamadoEnt) {
+			chamadoDto.add(new ChamadoDTO(chamaFind));
 		}
 		
 		return chamadoDto;
