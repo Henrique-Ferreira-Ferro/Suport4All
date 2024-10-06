@@ -5,22 +5,22 @@ import com.io.Suport4All.entity.DepartamentoEntity;
 public class DepartamentoDTO {
 	
 	private Long id;
-	private String nome;
+	private String nomeDepart;
 	
 	public DepartamentoDTO() {
 		
 	}
 	
-	public DepartamentoDTO(Long id, String nome) {
+	public DepartamentoDTO(Long id, String nomeDepart) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.nomeDepart = nomeDepart;
 		
 	}
 	
 	public DepartamentoDTO(DepartamentoEntity departamento) {
 		this.id = departamento.getId();
-		this.nome = departamento.getNomeDepart();
+		this.nomeDepart = departamento.getNomeDepart();
 		
 	}
 	
@@ -34,11 +34,11 @@ public class DepartamentoDTO {
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeDepart;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeDepart = nome;
 	}
 
 

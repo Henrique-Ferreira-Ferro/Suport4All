@@ -14,7 +14,7 @@ public class UsuarioDTO {
 	private String senha;
 	private String email;
 	private UserRole role;
-	private Long departamentoId;
+	private String departamentoNome;
 	private UserStatus status;
 
 	
@@ -22,14 +22,14 @@ public class UsuarioDTO {
 		
 	}
 
-	public UsuarioDTO(Long id, String nome, String senha, String email, UserRole role, Long departamentoId, UserStatus status) {
+	public UsuarioDTO(Long id, String nome, String senha, String email, UserRole role, String departamentoNome, UserStatus status) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.senha = senha;
 		this.email = email;
 		this.role = role;
-		this.departamentoId = departamentoId;
+		this.departamentoNome = departamentoNome;
 		this.status = status;
 	}
 	
@@ -39,7 +39,7 @@ public class UsuarioDTO {
 		this.senha = user.getSenha();
 		this.email = user.getEmail();
 		this.role = user.getRole();
-		this.departamentoId = user.getDepartamento().getId();
+		this.departamentoNome = user.getDepartamento().getNomeDepart();
 		this.status = user.getStatus();
 	}
 	
