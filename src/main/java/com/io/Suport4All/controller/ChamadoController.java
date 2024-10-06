@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.io.Suport4All.dto.ChamadoDTO;
 import com.io.Suport4All.dto.ChamadoUpdateDTO;
+import com.io.Suport4All.enums.ChamadoStatus;
 import com.io.Suport4All.service.ChamadoService;
 
 import jakarta.validation.Valid;
@@ -54,6 +55,10 @@ public class ChamadoController {
 		return chamadoService.findByTitulo(chamadoDTO.getTitulo());
 	}
 
+	@GetMapping("/status")
+	public List<ChamadoDTO> findByStatus(@RequestBody ChamadoDTO chamadoDTO){
+		return chamadoService.findByStatus(chamadoDTO.getStatus());
+	}
 	
 	
 }

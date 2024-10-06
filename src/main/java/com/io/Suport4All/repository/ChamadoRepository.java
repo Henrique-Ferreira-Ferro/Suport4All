@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.io.Suport4All.entity.ChamadoEntity;
+import com.io.Suport4All.enums.ChamadoStatus;
 
 @Repository
 public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long>{
@@ -14,5 +15,8 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long>{
 	List<ChamadoEntity> findByData(LocalDate data);
 	
 	List<ChamadoEntity> findByTitulo(String titulo);
- 	
+ 
+	List<ChamadoEntity> findByStatus(ChamadoStatus status);
+	
+	
 }
