@@ -18,6 +18,7 @@ import com.io.Suport4All.dto.ChamadoDTO;
 import com.io.Suport4All.dto.ChamadoUpdateDTO;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
+import com.io.Suport4All.enums.ChamadoStatus;
 import com.io.Suport4All.repository.ChamadoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -163,6 +164,25 @@ public class ChamadoService {
 			chamadoDto.add(new ChamadoDTO(chamaFind));
 		}
 		
+		return chamadoDto;
+		
+	}
+	
+	
+	// Find By status
+	
+	public List<ChamadoDTO> findByStatus(ChamadoStatus status){
+		
+		List<ChamadoEntity> chamadoEnt = chamadoRepository.findByStatus(status);
+		List<ChamadoDTO> chamadoDto = new ArrayList<>();
+		
+		if(chamadoEnt.isEmpty()) {
+			throw new RuntimeException("Nenhum chamado encontrado com o status: "+ status);
+		}
+		
+		for(ChamadoEntity chamaFind: chamadoEnt) {
+			chamadoDto.add(new ChamadoDTO(chamaFind));
+		}
 		return chamadoDto;
 		
 	}
