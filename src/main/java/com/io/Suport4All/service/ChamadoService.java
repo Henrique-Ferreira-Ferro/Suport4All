@@ -47,7 +47,12 @@ public class ChamadoService {
 
 		if (usuario.isEmpty()) {
 			throw new RuntimeException("O chamado deve estar associado a um Usuario ou técnico");
-		}	
+		}
+		
+		if(usuario.get().getStatus().toString().equals("DESLIGADO")) {
+			throw new RuntimeException("Usuario só pode abrir chamado se estiver ativado!");
+		}
+		
 		ChamadoEntity chamadoEnt = new ChamadoEntity();
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
@@ -81,6 +86,11 @@ public class ChamadoService {
 		if(!usuarioEntity.isPresent()) {
 			throw new RuntimeException("Não foi possível encontrar nenhum usuario");
 		}
+		
+		if(usuarioEntity.get().getStatus().toString().equals("DESLIGADO")) {
+			throw new RuntimeException("Usuario só pode editar chamado se estiver ativado!");
+		}
+		
 		Optional<ChamadoEntity> chamadoEnt = chamadoRepository.findById(chamadoDto.getId());
 		if(!chamadoEnt.isPresent()) {
 			throw new RuntimeException("O chamado não deve estar vaziu!");
@@ -89,8 +99,7 @@ public class ChamadoService {
 		
 		if(chamadoEnt.get().getStatus().toString().equals("FECHADO")) {
 			throw new RuntimeException("Não é possivel editar um chamado Fechado!");
-		}
-		
+		}	
 		
 		if(!userFind.getRole().toString().equals("ADMIN")) {
 			throw new RuntimeException("Somente os Tecnicos podem editar os Chamados!");
