@@ -45,8 +45,10 @@ public class UsuarioController {
 		return usuarioService.updateUser(user, id);
 	}
 
-	
-	
+	@GetMapping("/list/departamento")
+	public List<UsuarioDTO> findAllUsersByDepart(@RequestBody UsuarioDTO user) {
+		return usuarioService.findAllUsersByDepart(user.getDepartamentoNome());
+	}
 	
 	
 }

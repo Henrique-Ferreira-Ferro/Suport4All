@@ -24,28 +24,7 @@ public class UsuarioService {
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
 
-	// Encontrar por id
-	public UsuarioDTO findUserById(Long id) {
-
-		UsuarioEntity user = usuarioRepository.findById(id)
-				.orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
-
-		return new UsuarioDTO(user);
-
-	}
-
-	// Encontrar todos os usuarios
-
-	public List<UsuarioDTO> findAllUsers() {
-		List<UsuarioEntity> users = usuarioRepository.findAll();
-		List<UsuarioDTO> userDTOs = new ArrayList<>();
-
-		for (UsuarioEntity user : users) {
-			userDTOs.add(new UsuarioDTO(user));
-		}
-
-		return userDTOs;
-	}
+	
 
 	// Criar um usuario
 	public UsuarioDTO createUser(UsuarioDTO user) {
@@ -94,10 +73,42 @@ public class UsuarioService {
 
 	}
 
-	// Essa funcionalidade deve ser voltada para desativar um usuario
+
+	// Encontrar por id
+		public UsuarioDTO findUserById(Long id) {
+
+			UsuarioEntity user = usuarioRepository.findById(id)
+					.orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+
+			return new UsuarioDTO(user);
+
+		}
+
+		// Encontrar todos os usuarios
+
+		public List<UsuarioDTO> findAllUsers() {
+			List<UsuarioEntity> users = usuarioRepository.findAll();
+			List<UsuarioDTO> userDTOs = new ArrayList<>();
+
+			for (UsuarioEntity user : users) {
+				userDTOs.add(new UsuarioDTO(user));
+			}
+
+			return userDTOs;
+		}
 	
 	
+	//Encontrar todos os usuarios de um determinado departamento
+		public List<UsuarioDTO> findAllUsersByDepart(String nomeDepart){
+			List<UsuarioEntity> users = usuarioRepository.findByNomeDepartamento(nomeDepart);
+			List<UsuarioDTO> userDTO = new ArrayList<>();
+			
+			for(UsuarioEntity user: users) {
+				userDTO.add(new UsuarioDTO(user));
+			}
+			return userDTO;
+		}
 	
-	
+		
 	
 }
