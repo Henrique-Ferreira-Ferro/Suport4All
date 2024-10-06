@@ -11,6 +11,7 @@ import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.UserRole;
+import com.io.Suport4All.enums.UserStatus;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -68,6 +69,7 @@ public class UsuarioService {
 		usuarioEnti.setNome(user.getNome());
 		usuarioEnti.setSenha(user.getSenha());
 		usuarioEnti.setEmail(user.getEmail());
+		usuarioEnti.setStatus(UserStatus.ATIVO);
 		usuarioEnti.setRole(user.getRole());
 		usuarioEnti.setDepartamento(departament.get());
 		usuarioEnti = usuarioRepository.save(usuarioEnti);
@@ -84,6 +86,7 @@ public class UsuarioService {
 				.orElseThrow(() -> new RuntimeException("Departamento não encontrado!")));
 
 		userFind.setEmail(user.getEmail());
+		userFind.setStatus(user.getStatus());
 		userFind.setRole(user.getRole());
 		userFind.setNome(user.getNome());
 		userFind.setSenha(user.getSenha());
@@ -91,15 +94,10 @@ public class UsuarioService {
 
 	}
 
-	// deletar um usuario
-	public String deleteUser(Long id) {
-		Optional<UsuarioEntity> user = usuarioRepository.findById(id);
-		if (user.isPresent()) {
-			usuarioRepository.deleteById(id);
-			return "Usuario " + user.get().getNome() + " deletado com sucesso";
-		} else {
-			throw new RuntimeException("Erro ao tentar deletar usuario");
-		}
-	}
-
+	// Essa funcionalidade deve ser voltada para desativar um usuario
+	
+	
+	
+	
+	
 }

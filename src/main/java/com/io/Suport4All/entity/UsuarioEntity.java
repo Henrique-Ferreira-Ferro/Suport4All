@@ -3,9 +3,13 @@ package com.io.Suport4All.entity;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.io.Suport4All.enums.UserStatus;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -30,11 +34,13 @@ public class UsuarioEntity extends PessoaEntity{
 	@JsonBackReference
 	private List<ChamadoEntity> chamados;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private UserStatus status;
 	
 	
 	//Um usuario pode abrir muitos chamados
 	
-//	private List<ChamadoEntity> chamados;
 	
 	
 	public UsuarioEntity() {
@@ -53,17 +59,26 @@ public class UsuarioEntity extends PessoaEntity{
 	}
 
 
-//	public List<ChamadoEntity> getChamados() {
-//		return chamados;
-//	}
-//
-//
-//	public void setChamados(List<ChamadoEntity> chamados) {
-//		this.chamados = chamados;
-//	}
-	
-	
-	
-	
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
+	}
+
+
+	public List<ChamadoEntity> getChamados() {
+		return chamados;
+	}
+
+
+	public void setChamados(List<ChamadoEntity> chamados) {
+		this.chamados = chamados;
+	}
+
 	
 }

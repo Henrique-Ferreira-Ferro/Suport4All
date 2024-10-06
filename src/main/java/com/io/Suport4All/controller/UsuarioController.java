@@ -45,11 +45,7 @@ public class UsuarioController {
 		return usuarioService.updateUser(user, id);
 	}
 
-	@DeleteMapping("/{id}")
-	public String deleteUser(@PathVariable Long id) {
-		return usuarioService.deleteUser(id);
-	}
-
+	
 	
 	
 	
