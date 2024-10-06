@@ -17,6 +17,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "Senhas")
 @Data
+@NoArgsConstructor
 public class SenhasGeraisEntity {
 	
 	@Id
