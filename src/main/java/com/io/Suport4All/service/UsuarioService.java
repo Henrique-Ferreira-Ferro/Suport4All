@@ -49,12 +49,12 @@ public class UsuarioService {
 
 	// Criar um usuario
 	public UsuarioDTO createUser(UsuarioDTO user) {
-		Long departId = user.getDepartamentoId();
+		String departNome = user.getDepartamentoNome();
 
-		Optional<DepartamentoEntity> departament = departamentoRepository.findById(departId);
+		Optional<DepartamentoEntity> departament = departamentoRepository.findByNomeDepart(departNome);
 
 		if (departament.isEmpty()) {
-			throw new RuntimeException("O departamento não pode estar vaziu!");
+	        throw new RuntimeException("Departamento '" + departNome + "' não encontrado!");
 		}
 
 		// Maneira mais eficiente de lançar uma exception, caso ocorra um erro!
@@ -82,7 +82,7 @@ public class UsuarioService {
 		UsuarioEntity userFind = usuarioRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("Usuario não encontrado!"));
 
-		userFind.setDepartamento(departamentoRepository.findById(user.getDepartamentoId())
+		userFind.setDepartamento(departamentoRepository.findByNomeDepart(user.getDepartamentoNome())
 				.orElseThrow(() -> new RuntimeException("Departamento não encontrado!")));
 
 		userFind.setEmail(user.getEmail());
