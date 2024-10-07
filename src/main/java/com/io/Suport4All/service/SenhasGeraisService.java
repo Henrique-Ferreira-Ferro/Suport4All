@@ -103,4 +103,22 @@ public class SenhasGeraisService {
 	}
 	
 	
+	// Encontrar por titulo
+	
+	public List<SenhasGeraisDto> findAllByOrigem(String origem){
+		
+		List<SenhasGeraisEntity> senhasEntity = senhaRepository.findByOrigem(origem);
+		
+		List<SenhasGeraisDto> senhaDto = new ArrayList<>(); 
+		
+		for(SenhasGeraisEntity senhaEnt: senhasEntity) {
+			senhaDto.add(new SenhasGeraisDto(senhaEnt));
+		}
+		
+		return senhaDto;
+		
+	}
+	
+	
+	
 }
