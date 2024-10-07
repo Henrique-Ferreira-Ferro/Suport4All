@@ -41,5 +41,11 @@ public class SenhasGeraisController {
 		return senhasService.findAllSenhas();
 	}
 
+	@GetMapping("/origem")
+	public List<SenhasGeraisDto> findAllByOrigem(@RequestBody SenhasGeraisDto senhaDto){
+		return senhasService.findAllByOrigem(senhaDto.getOrigem());
+	}
+
+	
 	
 }
