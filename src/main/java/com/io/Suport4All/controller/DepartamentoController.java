@@ -42,5 +42,11 @@ public class DepartamentoController {
 		return service.updateDepartById(departamento, id);
 	}
 	
+	@GetMapping("/allName")
+	public List<DepartamentoDTO> findByNome(@RequestBody DepartamentoDTO departamento){
+		return service.findByNome(departamento.getNomeDepart());
+	}
+	
+	
 	
 }

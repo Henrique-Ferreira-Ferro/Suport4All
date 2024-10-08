@@ -66,6 +66,19 @@ public class DepartamentoService {
 
 	}
 
-	
+	public List<DepartamentoDTO> findByNome(String nome){
+		
+		List<DepartamentoEntity> departamentoEnti = repositoryDepart.findByNomeDepartLike(nome);
+		List<DepartamentoDTO> departamentoDto = new ArrayList<>();
+		
+		for (DepartamentoEntity departE : departamentoEnti) {
+			departamentoDto.add(new DepartamentoDTO(departE));
+		}
+		
+		return departamentoDto;
+		
+	}
 
+	
+	
 }

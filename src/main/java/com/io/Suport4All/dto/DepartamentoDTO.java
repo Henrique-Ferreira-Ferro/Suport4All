@@ -13,17 +13,17 @@ public class DepartamentoDTO {
 		
 	}
 	
-	public DepartamentoDTO(Long id, String nomeDepart) {
+	public DepartamentoDTO(Long id, String nomeDepart, String descricao) {
 		super();
 		this.id = id;
 		this.nomeDepart = nomeDepart;
-		
+		this.descricao = descricao;
 	}
 	
 	public DepartamentoDTO(DepartamentoEntity departamento) {
 		this.id = departamento.getId();
 		this.nomeDepart = departamento.getNomeDepart();
-		
+		this.descricao = departamento.getDescricao();
 	}
 	
 
@@ -50,10 +50,6 @@ public class DepartamentoDTO {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
-	
-	
-	
 
 	
 }
