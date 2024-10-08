@@ -42,9 +42,5 @@ public class DepartamentoController {
 		return service.updateDepartById(departamento, id);
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deleteDepart(@PathVariable Long id) {
-		return service.deleteDepart(id);
-	}
 	
 }

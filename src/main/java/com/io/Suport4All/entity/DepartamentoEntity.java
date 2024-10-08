@@ -14,9 +14,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 @Entity
 @Table(name = "Departamento")
+@Data
 public class DepartamentoEntity {
 	
 	@Id
@@ -25,6 +27,10 @@ public class DepartamentoEntity {
 	@NotBlank
 	@Column(name = "nome")
 	private String nomeDepart;
+	
+	@Column(name = "Descrição")
+	private String descricao;
+	
 	
 	//json back reference evita loop infinito
 	
@@ -38,43 +44,16 @@ public class DepartamentoEntity {
 	}
 
 
-	public DepartamentoEntity(long id, @NotBlank String nomeDepart, List<UsuarioEntity> users) {
+	public DepartamentoEntity(long id, @NotBlank String nomeDepart, String descricao, List<UsuarioEntity> users) {
 		super();
 		this.id = id;
 		this.nomeDepart = nomeDepart;
+		this.descricao = descricao;
 		this.users = users;
 	}
 
 
-	public long getId() {
-		return id;
-	}
-
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-
-	public String getNomeDepart() {
-		return nomeDepart;
-	}
-
-
-	public void setNomeDepart(String nomeDepart) {
-		this.nomeDepart = nomeDepart;
-	}
-
-
-	public List<UsuarioEntity> getUsers() {
-		return users;
-	}
-
-
-	public void setUsers(List<UsuarioEntity> users) {
-		this.users = users;
-	}
-
+	
 
 	
 	
