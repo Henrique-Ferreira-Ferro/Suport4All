@@ -6,22 +6,24 @@ public class DepartamentoDTO {
 	
 	private Long id;
 	private String nomeDepart;
+	private String descricao;
+
 	
 	public DepartamentoDTO() {
 		
 	}
 	
-	public DepartamentoDTO(Long id, String nomeDepart) {
+	public DepartamentoDTO(Long id, String nomeDepart, String descricao) {
 		super();
 		this.id = id;
 		this.nomeDepart = nomeDepart;
-		
+		this.descricao = descricao;
 	}
 	
 	public DepartamentoDTO(DepartamentoEntity departamento) {
 		this.id = departamento.getId();
 		this.nomeDepart = departamento.getNomeDepart();
-		
+		this.descricao = departamento.getDescricao();
 	}
 	
 
@@ -33,17 +35,21 @@ public class DepartamentoDTO {
 		this.id = id;
 	}
 
-	public String getNome() {
+	public String getNomeDepart() {
 		return nomeDepart;
 	}
 
-	public void setNome(String nome) {
-		this.nomeDepart = nome;
+	public void setNomeDepart(String nomeDepart) {
+		this.nomeDepart = nomeDepart;
 	}
 
+	public String getDescricao() {
+		return descricao;
+	}
 
-	
-	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
 
 	
 }

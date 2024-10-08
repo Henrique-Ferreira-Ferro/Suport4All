@@ -42,9 +42,11 @@ public class DepartamentoController {
 		return service.updateDepartById(departamento, id);
 	}
 	
-	@DeleteMapping("/{id}")
-	public String deleteDepart(@PathVariable Long id) {
-		return service.deleteDepart(id);
+	@GetMapping("/allName")
+	public List<DepartamentoDTO> findByNome(@RequestBody DepartamentoDTO departamento){
+		return service.findByNome(departamento.getNomeDepart());
 	}
+	
+	
 	
 }

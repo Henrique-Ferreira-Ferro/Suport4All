@@ -42,13 +42,13 @@ public class DepartamentoService {
 
 	public DepartamentoDTO createDepart(DepartamentoDTO departamentoDTO) {
 
-		if (departamentoDTO.getNome().isBlank()) {
+		if (departamentoDTO.getNomeDepart().isBlank()) {
 			throw new RuntimeException("Não deixe o nome do departamento em branco!");
 		}
 
 		DepartamentoEntity departamento = new DepartamentoEntity();
-		departamento.setNomeDepart(departamentoDTO.getNome());
-
+		departamento.setNomeDepart(departamentoDTO.getNomeDepart());
+		departamento.setDescricao(departamentoDTO.getDescricao());
 		DepartamentoEntity savedDepartamento = repositoryDepart.save(departamento);
 		return new DepartamentoDTO(savedDepartamento);
 
@@ -58,20 +58,27 @@ public class DepartamentoService {
 
 		DepartamentoEntity depart = repositoryDepart.findById(id)
 				.orElseThrow(() -> new RuntimeException("Erro ao tentar encontrar o departamento!"));
-
-		depart.setNomeDepart(departamento.getNome());
+		
+		depart.setDescricao(departamento.getDescricao());
 
 		DepartamentoEntity updatedDepartamento = repositoryDepart.save(depart);
 		return new DepartamentoDTO(updatedDepartamento);
 
 	}
 
-	public String deleteDepart(Long id) {
-		DepartamentoEntity depart = repositoryDepart.findById(id)
-				.orElseThrow(() -> new RuntimeException("Erro ao tentar deletar o departamento"));
-
-		repositoryDepart.deleteById(id);
-		return "Departamento " + depart.getNomeDepart() + " deletado com sucesso!";
+	public List<DepartamentoDTO> findByNome(String nome){
+		
+		List<DepartamentoEntity> departamentoEnti = repositoryDepart.findByNomeDepartLike(nome);
+		List<DepartamentoDTO> departamentoDto = new ArrayList<>();
+		
+		for (DepartamentoEntity departE : departamentoEnti) {
+			departamentoDto.add(new DepartamentoDTO(departE));
+		}
+		
+		return departamentoDto;
+		
 	}
 
+	
+	
 }
