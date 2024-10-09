@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import com.io.Suport4All.dto.DepartamentoDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
+import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -25,12 +27,17 @@ public class DepartamentoService {
 
 	public DepartamentoDTO findDepartById(Long id) {
 		DepartamentoEntity depart = repositoryDepart.findById(id)
-				.orElseThrow(() -> new RuntimeException("Departamento não encontrado"));
+				.orElseThrow(() -> new NotFound("Departamento não encontrado"));
 		return new DepartamentoDTO(depart);
 	}
 
 	public List<DepartamentoDTO> findAllDepart() {
 		List<DepartamentoEntity> departamentos = repositoryDepart.findAll();
+		
+		if(departamentos.isEmpty()) {
+			throw new NotFound("Não há departamentos cadastrados no momento!");
+		}
+		
 		List<DepartamentoDTO> departamentosDTOs = new ArrayList<DepartamentoDTO>();
 
 		for (DepartamentoEntity departamento : departamentos) {
@@ -42,10 +49,10 @@ public class DepartamentoService {
 
 	public DepartamentoDTO createDepart(DepartamentoDTO departamentoDTO) {
 
-		if (departamentoDTO.getNomeDepart().isBlank()) {
-			throw new RuntimeException("Não deixe o nome do departamento em branco!");
+		if (departamentoDTO.getNomeDepart().isBlank() || departamentoDTO.getNomeDepart() == null) {
+			throw new BadRequestException("Não deixe o nome do departamento em branco!");
 		}
-
+		
 		DepartamentoEntity departamento = new DepartamentoEntity();
 		departamento.setNomeDepart(departamentoDTO.getNomeDepart());
 		departamento.setDescricao(departamentoDTO.getDescricao());
@@ -57,7 +64,7 @@ public class DepartamentoService {
 	public DepartamentoDTO updateDepartById(DepartamentoDTO departamento, Long id) {
 
 		DepartamentoEntity depart = repositoryDepart.findById(id)
-				.orElseThrow(() -> new RuntimeException("Erro ao tentar encontrar o departamento!"));
+				.orElseThrow(() -> new NotFound("Erro ao tentar encontrar o departamento!"));
 		
 		depart.setDescricao(departamento.getDescricao());
 
@@ -68,7 +75,16 @@ public class DepartamentoService {
 
 	public List<DepartamentoDTO> findByNome(String nome){
 		
+		if(nome.isBlank() || nome == null) {
+			throw new BadRequestException("O campo nome precisa ser digitado!");
+		}
+		
 		List<DepartamentoEntity> departamentoEnti = repositoryDepart.findByNomeDepartLike(nome);
+		
+		if(departamentoEnti.isEmpty()) {
+			throw new NotFound("Nenhum departamento encontrado");
+		}
+		
 		List<DepartamentoDTO> departamentoDto = new ArrayList<>();
 		
 		for (DepartamentoEntity departE : departamentoEnti) {

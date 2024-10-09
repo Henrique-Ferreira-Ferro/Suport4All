@@ -19,6 +19,9 @@ import com.io.Suport4All.dto.ChamadoUpdateDTO;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.ChamadoStatus;
+import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.ForbiddenException;
+import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.ChamadoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -41,16 +44,25 @@ public class ChamadoService {
 	// Criar um chamado associando a um usuario
 
 	public ChamadoDTO openChamado(ChamadoDTO chamadoDto) {
+		
+		if (chamadoDto.getUsuarioId() == null) {
+			throw new BadRequestException("O chamado deve estar associado a um Usuario ou técnico");
+		}
+		
+		if(chamadoDto.getUsuarioId() <= 0) {
+			throw new BadRequestException("O id do usuario ou tecnico precisa ser positivo e inteiro!");
+		}
+		
 		Long UsuarioId = chamadoDto.getUsuarioId();
 
 		Optional<UsuarioEntity> usuario = usuarioRepository.findById(UsuarioId);
-
-		if (usuario.isEmpty()) {
-			throw new RuntimeException("O chamado deve estar associado a um Usuario ou técnico");
-		}
 		
+		if(!usuario.isPresent()) {
+			throw new NotFound("Ops, esse usuario não existe no nosso sistema :(");
+		}
+
 		if(usuario.get().getStatus().toString().equals("DESLIGADO")) {
-			throw new RuntimeException("Usuario só pode abrir chamado se estiver ativado!");
+			throw new ForbiddenException("Usuario só pode abrir chamado se estiver ativado!");
 		}
 		
 		ChamadoEntity chamadoEnt = new ChamadoEntity();
@@ -70,7 +82,7 @@ public class ChamadoService {
 				Files.write(filePath, anexo.getBytes());
 				chamadoEnt.setAnexo(filePath.toString());
 			} catch (IOException e) {
-				throw new RuntimeException("Erro ao salvar o arquivo: "+ e.getMessage());
+				throw new BadRequestException("Erro ao salvar o arquivo: "+ e.getMessage());
 			}   
         }
 		chamadoEnt = chamadoRepository.save(chamadoEnt);
@@ -82,27 +94,34 @@ public class ChamadoService {
 
 	public ChamadoDTO updateChamado(ChamadoUpdateDTO chamadoDto ,Long UsuarioId) {
 		
+		if(UsuarioId == null) {
+			throw new BadRequestException("Insira o id de um usuario!");
+		}
+		if(UsuarioId <= 0) {
+			throw new BadRequestException("Insira um id valido! Apenas numeros!");
+		}
+		
 		Optional<UsuarioEntity> usuarioEntity = usuarioRepository.findById(UsuarioId);
 		if(!usuarioEntity.isPresent()) {
-			throw new RuntimeException("Não foi possível encontrar nenhum usuario");
+			throw new NotFound("Não foi possível encontrar nenhum usuario");
 		}
 		
 		if(usuarioEntity.get().getStatus().toString().equals("DESLIGADO")) {
-			throw new RuntimeException("Usuario só pode editar chamado se estiver ativado!");
+			throw new ForbiddenException("Usuario só pode editar chamado se estiver ativado!");
 		}
 		
 		Optional<ChamadoEntity> chamadoEnt = chamadoRepository.findById(chamadoDto.getId());
 		if(!chamadoEnt.isPresent()) {
-			throw new RuntimeException("O chamado não deve estar vaziu!");
+			throw new NotFound("O chamado não deve estar vaziu!");
 		}
 		UsuarioEntity userFind = usuarioEntity.get();
 		
 		if(chamadoEnt.get().getStatus().toString().equals("FECHADO")) {
-			throw new RuntimeException("Não é possivel editar um chamado Fechado!");
+			throw new ForbiddenException("Não é possivel editar um chamado Fechado!");
 		}	
 		
 		if(!userFind.getRole().toString().equals("ADMIN")) {
-			throw new RuntimeException("Somente os Tecnicos podem editar os Chamados!");
+			throw new ForbiddenException("Somente os Tecnicos podem editar os Chamados!");
 		}
 		ChamadoEntity chamadoMod =  chamadoEnt.get();
 		chamadoMod.setStatus(chamadoDto.getStatus());
@@ -117,7 +136,7 @@ public class ChamadoService {
 		List<ChamadoDTO> chamadoDto = new ArrayList<>();
 		
 		if(chamadoEnt.isEmpty()) {
-			throw new RuntimeException("Não há chamados abertos no momento!");
+			throw new NotFound("Não há chamados abertos no momento!");
 		}
 		
 		for (ChamadoEntity chamadoE : chamadoEnt) {
@@ -136,7 +155,7 @@ public class ChamadoService {
 		List<ChamadoDTO> chamadoDto = new ArrayList<>();
 		
 		if(chamadosEnt.isEmpty()) {
-			throw new RuntimeException("Nenhum chamado encontrado nessa data!"+ date);
+			throw new NotFound("Nenhum chamado encontrado nessa data!"+ date);
 		}
 		
 		for (ChamadoEntity chamaFind : chamadosEnt) {
@@ -151,7 +170,7 @@ public class ChamadoService {
 	
 	public ChamadoDTO findById(Long id){
 		
-		ChamadoEntity chamado = chamadoRepository.findById(id).orElseThrow(() -> new RuntimeException("Não foi possivel encontrar o chamado!"));
+		ChamadoEntity chamado = chamadoRepository.findById(id).orElseThrow(() -> new NotFound("Não foi possivel encontrar o chamado!"));
 		
 		return new ChamadoDTO(chamado);
 	}
@@ -166,7 +185,7 @@ public class ChamadoService {
 		List<ChamadoDTO> chamadoDto = new ArrayList<>();
 		
 		if(chamadoEnt.isEmpty()) {
-			throw new RuntimeException("Nenhum chamado encontrado com esse titulo! " + titulo);
+			throw new NotFound("Nenhum chamado encontrado com esse titulo! " + titulo);
 		}
 		
 		for(ChamadoEntity chamaFind: chamadoEnt) {
@@ -186,7 +205,7 @@ public class ChamadoService {
 		List<ChamadoDTO> chamadoDto = new ArrayList<>();
 		
 		if(chamadoEnt.isEmpty()) {
-			throw new RuntimeException("Nenhum chamado encontrado com o status: "+ status);
+			throw new NotFound("Nenhum chamado encontrado com o status: "+ status);
 		}
 		
 		for(ChamadoEntity chamaFind: chamadoEnt) {
