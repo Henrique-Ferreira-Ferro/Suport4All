@@ -66,13 +66,19 @@ public class ChamadoService {
 		}
 		
 		ChamadoEntity chamadoEnt = new ChamadoEntity();
+		if(chamadoDto.getTitulo().isBlank() || chamadoDto.getTitulo() == null) {
+			throw new BadRequestException("O titulo do chamado não pode ser vaziu!");
+		}
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
 		chamadoEnt.setData(chamadoDto.getDate());
 		// Aqui convertemos de valor numerico para enum
 		// Necessario pesquisar
+		if(chamadoDto.getExtremidade().toString().isBlank() || chamadoDto.getExtremidade() == null) {
+			throw new BadRequestException("O chamado deve conter o nivel de Extremidade!");
+		}
 		chamadoEnt.setExtremidade(chamadoDto.getExtremidade());
-		chamadoEnt.setStatus(chamadoDto.getStatus());
+		chamadoEnt.setStatus(ChamadoStatus.ABERTO);
 		chamadoEnt.setUsuario(usuario.get());
 		MultipartFile anexo = chamadoDto.getAnexo();
         if (anexo != null && !anexo.isEmpty()) {
@@ -112,7 +118,7 @@ public class ChamadoService {
 		
 		Optional<ChamadoEntity> chamadoEnt = chamadoRepository.findById(chamadoDto.getId());
 		if(!chamadoEnt.isPresent()) {
-			throw new NotFound("O chamado não deve estar vaziu!");
+			throw new NotFound("O chamado não foi encontrado!");
 		}
 		UsuarioEntity userFind = usuarioEntity.get();
 		

@@ -1,5 +1,7 @@
 package com.io.Suport4All.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.UserRole;
 import com.io.Suport4All.enums.UserStatus;
@@ -17,12 +19,13 @@ public class UsuarioDTO {
 	private String departamentoNome;
 	private UserStatus status;
 
+	private MultipartFile anexo;
 	
 	public UsuarioDTO() {
 		
 	}
 
-	public UsuarioDTO(Long id, String nome, String senha, String email, UserRole role, String departamentoNome, UserStatus status) {
+	public UsuarioDTO(Long id, String nome, String senha, String email, UserRole role, String departamentoNome, UserStatus status, MultipartFile anexo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -31,6 +34,7 @@ public class UsuarioDTO {
 		this.role = role;
 		this.departamentoNome = departamentoNome;
 		this.status = status;
+		this.anexo = anexo;
 	}
 	
 	public UsuarioDTO(UsuarioEntity user) {
