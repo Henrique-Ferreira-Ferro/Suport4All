@@ -38,6 +38,7 @@ public class UsuarioEntity extends PessoaEntity{
 	@Column(nullable = false)
 	private UserStatus status;
 	
+	private String anexo;
 	
 	//Um usuario pode abrir muitos chamados
 	
@@ -80,5 +81,18 @@ public class UsuarioEntity extends PessoaEntity{
 		this.chamados = chamados;
 	}
 
+
+
+	public String getAnexo() {
+		return anexo;
+	}
+
+
+
+	public void setAnexo(String anexo) {
+		this.anexo = anexo;
+	}
+
+	
 	
 }

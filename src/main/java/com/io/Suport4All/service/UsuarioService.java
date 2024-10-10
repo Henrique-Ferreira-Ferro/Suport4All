@@ -1,17 +1,23 @@
 package com.io.Suport4All.service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.UsuarioDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
-import com.io.Suport4All.enums.UserRole;
 import com.io.Suport4All.enums.UserStatus;
+import com.io.Suport4All.exceptions.BadRequestException;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -24,7 +30,28 @@ public class UsuarioService {
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
 
+	@Value("{file.upload-userP}")
+	private String uploadDirPerfil;
 	
+	
+	public UsuarioDTO uploadPhoto(UsuarioDTO user) {
+		MultipartFile anexo = user.getAnexo();
+		UsuarioEntity userEntity = new UsuarioEntity();
+		if(anexo != null && !anexo.isEmpty()) {
+			String fileName = System.currentTimeMillis() + "_" + anexo.getOriginalFilename();
+			Path filePath = Paths.get(uploadDirPerfil + fileName);
+			
+			try {
+				Files.write(filePath, anexo.getBytes());
+				userEntity.setAnexo(filePath.toString());
+			}catch(IOException e) {
+				throw new BadRequestException("Não foi possivel carregar a foto do usuario!"+ e.getMessage());
+			}
+			
+		}
+		userEntity = usuarioRepository.save(userEntity);
+		return new UsuarioDTO(userEntity);
+	}
 
 	// Criar um usuario
 	public UsuarioDTO createUser(UsuarioDTO user) {
