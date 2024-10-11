@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.UsuarioDTO;
+import com.io.Suport4All.dto.UsuarioDTOAnexo;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.UserStatus;
 import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
@@ -30,27 +32,30 @@ public class UsuarioService {
 	@Autowired
 	private DepartamentoRepository departamentoRepository;
 
-	@Value("{file.upload-userP}")
+	@Value("${file.upload-userP}")
 	private String uploadDirPerfil;
 	
 	
-	public UsuarioDTO uploadPhoto(UsuarioDTO user) {
-		MultipartFile anexo = user.getAnexo();
-		UsuarioEntity userEntity = new UsuarioEntity();
+	public UsuarioDTO uploadPhoto(MultipartFile anexo, Long id) {
+		Optional<UsuarioEntity> userEntity = usuarioRepository.findById(id);
+		if(userEntity.isEmpty()) {
+			throw new NotFound("Não foi possivel encontrar o usuario!");
+		}
+		UsuarioEntity userFind = userEntity.get();
 		if(anexo != null && !anexo.isEmpty()) {
 			String fileName = System.currentTimeMillis() + "_" + anexo.getOriginalFilename();
 			Path filePath = Paths.get(uploadDirPerfil + fileName);
 			
 			try {
 				Files.write(filePath, anexo.getBytes());
-				userEntity.setAnexo(filePath.toString());
+				userFind.setAnexo(filePath.toString());
 			}catch(IOException e) {
 				throw new BadRequestException("Não foi possivel carregar a foto do usuario!"+ e.getMessage());
 			}
 			
 		}
-		userEntity = usuarioRepository.save(userEntity);
-		return new UsuarioDTO(userEntity);
+		userFind = usuarioRepository.save(userFind);
+		return new UsuarioDTO(userFind);
 	}
 
 	// Criar um usuario
@@ -102,23 +107,23 @@ public class UsuarioService {
 
 
 	// Encontrar por id
-		public UsuarioDTO findUserById(Long id) {
+		public UsuarioDTOAnexo findUserById(Long id) {
 
 			UsuarioEntity user = usuarioRepository.findById(id)
-					.orElseThrow(() -> new RuntimeException("Usuario não encontrado"));
+					.orElseThrow(() -> new NotFound("Usuario não encontrado"));
 
-			return new UsuarioDTO(user);
+			return new UsuarioDTOAnexo(user);
 
 		}
 
 		// Encontrar todos os usuarios
 
-		public List<UsuarioDTO> findAllUsers() {
+		public List<UsuarioDTOAnexo> findAllUsers() {
 			List<UsuarioEntity> users = usuarioRepository.findAll();
-			List<UsuarioDTO> userDTOs = new ArrayList<>();
+			List<UsuarioDTOAnexo> userDTOs = new ArrayList<>();
 
 			for (UsuarioEntity user : users) {
-				userDTOs.add(new UsuarioDTO(user));
+				userDTOs.add(new UsuarioDTOAnexo(user));
 			}
 
 			return userDTOs;
@@ -126,12 +131,12 @@ public class UsuarioService {
 	
 	
 	//Encontrar todos os usuarios de um determinado departamento
-		public List<UsuarioDTO> findAllUsersByDepart(String nomeDepart){
+		public List<UsuarioDTOAnexo> findAllUsersByDepart(String nomeDepart){
 			List<UsuarioEntity> users = usuarioRepository.findByNomeDepartamento(nomeDepart);
-			List<UsuarioDTO> userDTO = new ArrayList<>();
+			List<UsuarioDTOAnexo> userDTO = new ArrayList<>();
 			
 			for(UsuarioEntity user: users) {
-				userDTO.add(new UsuarioDTO(user));
+				userDTO.add(new UsuarioDTOAnexo(user));
 			}
 			return userDTO;
 		}
