@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,6 +35,9 @@ public class UsuarioService {
 
 	@Value("${file.upload-userP}")
 	private String uploadDirPerfil;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	
 	public UsuarioDTO uploadPhoto(MultipartFile anexo, Long id) {
@@ -76,9 +80,11 @@ public class UsuarioService {
 		 * RuntimeException("O departamento não pode estar vaziu"))
 		 */
 		
+		String encoder = passwordEncoder.encode(user.getSenha());
+		
 		UsuarioEntity usuarioEnti = new UsuarioEntity();
 		usuarioEnti.setNome(user.getNome());
-		usuarioEnti.setSenha(user.getSenha());
+		usuarioEnti.setSenha(encoder);
 		usuarioEnti.setEmail(user.getEmail());
 		usuarioEnti.setStatus(UserStatus.ATIVO);
 		usuarioEnti.setRole(user.getRole());
@@ -95,12 +101,14 @@ public class UsuarioService {
 
 		userFind.setDepartamento(departamentoRepository.findByNomeDepart(user.getDepartamentoNome())
 				.orElseThrow(() -> new RuntimeException("Departamento não encontrado!")));
-
+		
+		String encoder = passwordEncoder.encode(user.getSenha());
+		
 		userFind.setEmail(user.getEmail());
 		userFind.setStatus(user.getStatus());
 		userFind.setRole(user.getRole());
 		userFind.setNome(user.getNome());
-		userFind.setSenha(user.getSenha());
+		userFind.setSenha(encoder);
 		return new UsuarioDTO(usuarioRepository.save(userFind));
 
 	}
