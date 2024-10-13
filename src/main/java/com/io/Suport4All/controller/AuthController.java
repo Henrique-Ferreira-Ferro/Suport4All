@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.io.Suport4All.dto.LoginRequestDTO;
 import com.io.Suport4All.dto.RegisterRequestDTO;
 import com.io.Suport4All.dto.ResponseDTO;
+import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.UserRole;
 import com.io.Suport4All.enums.UserStatus;
 import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.infra.security.TokenService;
+import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -33,6 +36,8 @@ public class AuthController {
 	private final UsuarioRepository repository;
 	private final PasswordEncoder passwordEncoder;
 	private final TokenService tokenService;
+	private final DepartamentoRepository departamentoRepository;
+	
 	
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginRequestDTO body) {
@@ -50,13 +55,20 @@ public class AuthController {
 		
 		Optional<UsuarioEntity> user = this.repository.findByEmail(body.getEmail());
 		
+		
+		
 		if(user.isEmpty()) {
 			UsuarioEntity newUser = new UsuarioEntity();
 			newUser.setNome(body.getNome());
 			newUser.setEmail(body.getEmail());
-			newUser.setSenha(body.getSenha());
+			newUser.setSenha(passwordEncoder.encode(body.getSenha()));
 			newUser.setRole(UserRole.USER);
-			newUser.setDepartamento(body.getDepartamento());
+			
+			
+			DepartamentoEntity departamento = departamentoRepository.findByNomeDepart(body.getDepartamento())
+					.orElseThrow(() -> new NotFound("Não foi possivel encontrar o departamento com nome: "+ body.getDepartamento()));
+					
+			newUser.setDepartamento(departamento);
 			newUser.setStatus(UserStatus.ATIVO);
 			this.repository.save(newUser);
 			

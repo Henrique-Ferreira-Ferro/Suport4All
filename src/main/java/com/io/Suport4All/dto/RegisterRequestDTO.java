@@ -20,7 +20,7 @@ public class RegisterRequestDTO {
 	private String nome;
 	private String senha;
 	private String email;
-	private DepartamentoEntity departamento;
+	private String departamento;
 	private UserRole role;
 	private UserStatus status;
 	
