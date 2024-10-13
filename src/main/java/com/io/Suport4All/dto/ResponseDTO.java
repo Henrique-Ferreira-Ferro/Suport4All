@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResponseDTO {
-	private String nome;
+	private String email;
 	private String token;
 }
