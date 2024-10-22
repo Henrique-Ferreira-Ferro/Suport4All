@@ -3,6 +3,7 @@ package com.io.Suport4All.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,9 +18,12 @@ import com.io.Suport4All.dto.UsuarioDTOAnexo;
 import com.io.Suport4All.service.UsuarioService;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("usuario")
+@RequiredArgsConstructor
 public class UsuarioController {
 
 	@Autowired
