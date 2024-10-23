@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.io.Suport4All.dto.SenhasGeraisDto;
 import com.io.Suport4All.entity.SenhasGeraisEntity;
+import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.SenhasGeraisRepository;
 
 @Service
@@ -106,19 +107,24 @@ public class SenhasGeraisService {
 	// Encontrar por titulo
 	
 	public List<SenhasGeraisDto> findAllByOrigem(String origem){
-		
 		List<SenhasGeraisEntity> senhasEntity = senhaRepository.findByOrigem(origem);
-		
 		List<SenhasGeraisDto> senhaDto = new ArrayList<>(); 
-		
 		for(SenhasGeraisEntity senhaEnt: senhasEntity) {
 			senhaDto.add(new SenhasGeraisDto(senhaEnt));
 		}
-		
-		return senhaDto;
-		
+		return senhaDto;	
 	}
 	
+	//Deletar uma senha pelo id
+	
+	public String deleteSenhaById(Long id) {
+		var senhaEntity = senhaRepository.findById(id);
+		if(!senhaEntity.isPresent()) {
+			throw new NotFound("Ops, não foi possivel encontrar a senha!");
+		}
+		senhaRepository.deleteById(id);
+		return "Senha deletada com sucesso!";
+	}
 	
 	
 }
