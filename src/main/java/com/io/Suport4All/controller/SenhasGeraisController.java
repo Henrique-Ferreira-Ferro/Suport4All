@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,6 +54,11 @@ public class SenhasGeraisController {
 	@GetMapping("/origem")
 	public List<SenhasGeraisDto> findAllByOrigem(@RequestBody SenhasGeraisDto senhaDto){
 		return senhasService.findAllByOrigem(senhaDto.getOrigem());
+	}
+
+	@DeleteMapping("/{id}")
+	public String deleteSenhaById(@PathVariable Long id) {
+		return senhasService.deleteSenhaById(id);
 	}
 
 	
