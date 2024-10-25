@@ -27,10 +27,13 @@ public class TokenService {
 			
 			String role = user.getRole().toString().toUpperCase();
 			
+			String status = user.getStatus().toString().toUpperCase();
+			
 			String token = JWT.create()
 					.withIssuer("login-auth-api")
 					.withSubject(user.getEmail())
 					.withClaim("roles", Collections.singletonList(role))
+					.withClaim("status", Collections.singletonList(status))
 					.withExpiresAt(this.generateExpirationDate())
 					.sign(algorithm);
 			return token;
