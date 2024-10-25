@@ -54,6 +54,12 @@ public class UsuarioController {
 	public UsuarioDTO updateUser(@RequestBody UsuarioDTO user, @PathVariable Long id) {
 		return usuarioService.updateUser(user, id);
 	}
+	
+	@PutMapping("/update/status/{id}")
+	public UsuarioDTO updateStatusUser(@RequestBody UsuarioDTO user, @PathVariable Long id) {
+		return usuarioService.updateStatusUser(user, id);
+	}
+	
 
 	@GetMapping("/list/departamento")
 	public List<UsuarioDTOAnexo> findAllUsersByDepart(@RequestBody UsuarioDTO user) {
