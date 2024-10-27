@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,6 +48,13 @@ public class ChamadoService {
 
 	public ChamadoDTO openChamado(ChamadoDTO chamadoDto) {
 		
+		
+		//Geração de data automaticamente
+		
+		Date dataAtual = new Date();
+		String dataFormatada = new SimpleDateFormat("dd/MM/yyyy").format(dataAtual);
+		
+		
 		if (chamadoDto.getUsuarioId() == null) {
 			throw new BadRequestException("O chamado deve estar associado a um Usuario ou técnico");
 		}
@@ -71,7 +81,9 @@ public class ChamadoService {
 		}
 		chamadoEnt.setTitulo(chamadoDto.getTitulo());
 		chamadoEnt.setDescricao(chamadoDto.getDescricao());
-		chamadoEnt.setData(chamadoDto.getDate());
+		
+		//Data gerada automaticamente
+		chamadoEnt.setData(dataFormatada);
 		// Aqui convertemos de valor numerico para enum
 		// Necessario pesquisar
 		if(chamadoDto.getExtremidade().toString().isBlank() || chamadoDto.getExtremidade() == null) {
@@ -154,7 +166,7 @@ public class ChamadoService {
 	}
 	
 	
-	public List<ChamadoDTO> findByDate(LocalDate date){
+	public List<ChamadoDTO> findByDate(String date){
 		
 		List<ChamadoEntity> chamadosEnt = chamadoRepository.findByData(date);
 		

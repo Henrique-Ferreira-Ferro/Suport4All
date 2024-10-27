@@ -12,7 +12,7 @@ import com.io.Suport4All.enums.ChamadoStatus;
 @Repository
 public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long>{
 	
-	List<ChamadoEntity> findByData(LocalDate data);
+	List<ChamadoEntity> findByData(String data);
 	
 	List<ChamadoEntity> findByTitulo(String titulo);
  

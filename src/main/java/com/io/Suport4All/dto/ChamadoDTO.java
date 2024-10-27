@@ -16,7 +16,7 @@ public class ChamadoDTO {
 	private String descricao;
 	private Extremidade extremidade;
 	@JsonFormat(pattern =  "dd/MM/yyyy")
-	private LocalDate date;
+	private String date;
 	// Não faz sentido pedir todo o usuario certo? Pois estamos associando apenas ao id do mesmo
 	private Long usuarioId;
     private MultipartFile anexo;
@@ -27,7 +27,7 @@ public class ChamadoDTO {
 		
 	}
 
-	public ChamadoDTO(Long id, String titulo, String descricao,ChamadoStatus status ,Extremidade extremidade, LocalDate date, Long usuarioId,
+	public ChamadoDTO(Long id, String titulo, String descricao,ChamadoStatus status ,Extremidade extremidade, String date, Long usuarioId,
 			MultipartFile anexo) {
 		this.id = id;
 		this.titulo = titulo;
@@ -83,11 +83,11 @@ public class ChamadoDTO {
 		this.extremidade = extremidade;
 	}
 
-	public LocalDate getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 

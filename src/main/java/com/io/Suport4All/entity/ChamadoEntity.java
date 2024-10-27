@@ -44,7 +44,7 @@ public class ChamadoEntity {
 	private ChamadoStatus status;
 	
 	@JsonFormat(pattern =  "dd/MM/yyyy")
-	private LocalDate data;
+	private String data;
 	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id")
@@ -57,7 +57,7 @@ public class ChamadoEntity {
 	}
 	
 	
-	public ChamadoEntity(Long id, @NotBlank String titulo, String descricao, Extremidade extremidade, LocalDate data,
+	public ChamadoEntity(Long id, @NotBlank String titulo, String descricao, Extremidade extremidade, String data,
 			UsuarioEntity usuario, String anexo) {
 		super();
 		this.id = id;
@@ -103,11 +103,11 @@ public class ChamadoEntity {
 		this.extremidade = extremidade;
 	}
 
-	public LocalDate getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(LocalDate data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
