@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.io.Suport4All.dto.ChamadoDTO;
+import com.io.Suport4All.dto.ChamadoDTOAnexo;
 import com.io.Suport4All.dto.ChamadoUpdateDTO;
 import com.io.Suport4All.service.ChamadoService;
 
@@ -41,8 +42,13 @@ public class ChamadoController {
 		return chamadoService.updateChamado(chamadoDTO, id);
 	}
 
+	@GetMapping("/{id}")
+	public ChamadoDTOAnexo findById(@PathVariable Long id){
+		return chamadoService.findById(id);
+	}
+	
 	@GetMapping
-	public List<ChamadoDTO> findAll() {
+	public List<ChamadoDTOAnexo> findAll() {
 		return chamadoService.findAll();
 	}
 

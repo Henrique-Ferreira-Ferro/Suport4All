@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.ChamadoDTO;
+import com.io.Suport4All.dto.ChamadoDTOAnexo;
 import com.io.Suport4All.dto.ChamadoUpdateDTO;
 import com.io.Suport4All.entity.ChamadoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
@@ -149,16 +150,16 @@ public class ChamadoService {
 	
 	// Listar todos os chamados
 	
-	public List<ChamadoDTO> findAll() {
+	public List<ChamadoDTOAnexo> findAll() {
 		List<ChamadoEntity> chamadoEnt = chamadoRepository.findAll();
-		List<ChamadoDTO> chamadoDto = new ArrayList<>();
+		List<ChamadoDTOAnexo> chamadoDto = new ArrayList<>();
 		
 		if(chamadoEnt.isEmpty()) {
 			throw new NotFound("Não há chamados abertos no momento!");
 		}
 		
 		for (ChamadoEntity chamadoE : chamadoEnt) {
-			chamadoDto.add(new ChamadoDTO(chamadoE));
+			chamadoDto.add(new ChamadoDTOAnexo(chamadoE));
 		}
 		
 		return chamadoDto;
@@ -186,11 +187,11 @@ public class ChamadoService {
 	
 	//Find by id
 	
-	public ChamadoDTO findById(Long id){
+	public ChamadoDTOAnexo findById(Long id){
 		
 		ChamadoEntity chamado = chamadoRepository.findById(id).orElseThrow(() -> new NotFound("Não foi possivel encontrar o chamado!"));
 		
-		return new ChamadoDTO(chamado);
+		return new ChamadoDTOAnexo(chamado);
 	}
 	
 	
