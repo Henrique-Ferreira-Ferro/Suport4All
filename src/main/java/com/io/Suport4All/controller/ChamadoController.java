@@ -67,5 +67,19 @@ public class ChamadoController {
 		return chamadoService.findByStatus(chamadoDTO.getStatus());
 	}
 	
+	@GetMapping("/status/aberto")
+	public int countStatusAberto() {
+		return chamadoService.countStatusAberto();
+	}
+	
+	@GetMapping("/status/andamento")
+	public int countStatusEmAndamento() {
+		return chamadoService.countStatusEmAndamento();
+	}
+	
+	@GetMapping("/status/fechado")
+	public int countStatusFechado() {
+		return chamadoService.countStatusFechado();
+	}
 	
 }
