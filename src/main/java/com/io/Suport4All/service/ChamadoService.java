@@ -234,6 +234,17 @@ public class ChamadoService {
 		
 	}
 	
+	public int countStatusAberto() {
+		return chamadoRepository.countStatusAberto();
+	}
+	
+	public int countStatusEmAndamento() {
+		return chamadoRepository.countStatusAndamento();
+	}
+	
+	public int countStatusFechado() {
+		return chamadoRepository.countStatusFechado();
+	}
 	
 	
 }
