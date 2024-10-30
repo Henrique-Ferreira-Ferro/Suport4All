@@ -73,6 +73,12 @@ public class UsuarioController {
 		return usuarioService.findAllUsersByDepart(user.getDepartamentoNome());
 	}
 	
+	@GetMapping("/find/email")
+	public UsuarioDTO findUserByEmail(@RequestBody UsuarioDTO user){
+		return usuarioService.findUserByEmail(user.getEmail());
+	}
+
+	
 	//O código abaixo foi gerado pelo chatgpt
 	//Eu como autor do projeto tive dificuldade de implementar essa funcionalidade
 	//Por isso estou escrevendo aqui para revisar esse trecho e aprender 
