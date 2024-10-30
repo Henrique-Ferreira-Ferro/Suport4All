@@ -150,7 +150,7 @@ public class UsuarioService {
 		}
 	
 	
-	//Encontrar todos os usuarios de um determinado departamento
+		//Encontrar todos os usuarios de um determinado departamento
 		public List<UsuarioDTOAnexo> findAllUsersByDepart(String nomeDepart){
 			List<UsuarioEntity> users = usuarioRepository.findByNomeDepartamento(nomeDepart);
 			List<UsuarioDTOAnexo> userDTO = new ArrayList<>();
@@ -161,6 +161,18 @@ public class UsuarioService {
 			return userDTO;
 		}
 	
+		//Encontrar usuario por email
+		public UsuarioDTO findUserByEmail(String email){
+			Optional<UsuarioEntity> userFind = usuarioRepository.findByEmail(email);
+			
+			if(!userFind.isPresent()) {
+				throw new NotFound("Usuario não encontrado");
+			}
+			UsuarioEntity user = userFind.get();
+			return new UsuarioDTO(user);
+		}
+		
+		
 		//Notas do autor: Após o try o código foi gerado pelo chatGpt, por isso 
 		//Será necessario uma revisão meticulosa do que foi feito, afim de se aprender
 		//e replicar em outros projetos

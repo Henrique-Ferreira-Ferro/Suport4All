@@ -21,6 +21,7 @@ public interface UsuarioRepository extends JpaRepository<UsuarioEntity, Long>{
 	@Query(value = "SELECT u.* FROM usuario u JOIN departamento d ON u.id_departamento = d.id WHERE d.nome = :nomeDepart", nativeQuery = true)
 	List<UsuarioEntity> findByNomeDepartamento(@Param("nomeDepart") String nomeDepart);
 	
+	@Query(value = "SELECT * FROM usuario WHERE email = ?1", nativeQuery = true)
     Optional<UsuarioEntity> findByEmail(String email);
 
 	
