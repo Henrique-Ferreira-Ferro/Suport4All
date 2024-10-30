@@ -180,6 +180,8 @@ public class UsuarioService {
 			        }
 			    } catch (MalformedURLException e) {
 			        throw new RuntimeException("Erro ao carregar a imagem.", e);
+			    } catch(NullPointerException f) {
+			    	throw new NotFound("Usuario não possui foto");
 			    }
 		}
 		
