@@ -1,8 +1,14 @@
 package com.io.Suport4All.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,7 +25,8 @@ import com.io.Suport4All.service.UsuarioService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 @RestController
 @CrossOrigin("*")
 @RequestMapping("usuario")
@@ -66,5 +73,27 @@ public class UsuarioController {
 		return usuarioService.findAllUsersByDepart(user.getDepartamentoNome());
 	}
 	
+	//O código abaixo foi gerado pelo chatgpt
+	//Eu como autor do projeto tive dificuldade de implementar essa funcionalidade
+	//Por isso estou escrevendo aqui para revisar esse trecho e aprender 
+	//o que foi feito!
+	@GetMapping("/find/photo/{id}")
+	public ResponseEntity<Resource> findImageUser(@PathVariable Long id){
+		// Tenta detectar o tipo de conteúdo da imagem
+	    Resource imageResource = usuarioService.findImageUser(id);
+
+	    String contentType = "application/octet-stream"; // Tipo padrão, caso não seja uma imagem
+	    try {
+	        Path path = Paths.get(imageResource.getURI());
+	        contentType = Files.probeContentType(path);
+	    } catch (IOException ex) {
+	        System.out.println("Erro ao determinar o tipo de conteúdo da imagem: " + ex.getMessage());
+	    }
+
+	    return ResponseEntity.ok()
+	            .contentType(MediaType.parseMediaType(contentType))
+	            .body(imageResource);
+	}
+
 	
 }
