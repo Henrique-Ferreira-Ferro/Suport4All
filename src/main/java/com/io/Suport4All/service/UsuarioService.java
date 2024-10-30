@@ -1,6 +1,7 @@
 package com.io.Suport4All.service;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -23,6 +24,8 @@ import com.io.Suport4All.exceptions.BadRequestException;
 import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 @Service
 public class UsuarioService {
@@ -158,6 +161,27 @@ public class UsuarioService {
 			return userDTO;
 		}
 	
+		//Notas do autor: Após o try o código foi gerado pelo chatGpt, por isso 
+		//Será necessario uma revisão meticulosa do que foi feito, afim de se aprender
+		//e replicar em outros projetos
+		public Resource findImageUser(Long id) {
+			 UsuarioEntity userF = usuarioRepository.findById(id)
+			            .orElseThrow(() -> new NotFound("Ops, não encontramos nenhum usuário :("));
+			    String filePath = userF.getAnexo(); // Caminho completo da imagem
+			    
+			    try {
+			        Path path = Paths.get(filePath);
+			        Resource resource = new UrlResource(path.toUri());
+			        
+			        if (resource.exists() && resource.isReadable()) {
+			            return resource;
+			        } else {
+			            throw new RuntimeException("Erro: Imagem não encontrada ou não pode ser lida.");
+			        }
+			    } catch (MalformedURLException e) {
+			        throw new RuntimeException("Erro ao carregar a imagem.", e);
+			    }
+		}
 		
 	
 }
