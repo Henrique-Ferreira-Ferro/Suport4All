@@ -73,7 +73,7 @@ public class UsuarioController {
 		return usuarioService.findAllUsersByDepart(user.getDepartamentoNome());
 	}
 	
-	@GetMapping("/find/email")
+	@PostMapping("/find/email")
 	public UsuarioDTO findUserByEmail(@RequestBody UsuarioDTO user){
 		return usuarioService.findUserByEmail(user.getEmail());
 	}
