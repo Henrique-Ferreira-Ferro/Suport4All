@@ -105,16 +105,26 @@ public class UsuarioService {
 		userFind.setDepartamento(departamentoRepository.findByNomeDepart(user.getDepartamentoNome())
 				.orElseThrow(() -> new NotFound("Departamento não encontrado!")));
 		
-		String encoder = passwordEncoder.encode(user.getSenha());
 		
 		userFind.setEmail(user.getEmail());
 		userFind.setStatus(user.getStatus());
 		userFind.setRole(user.getRole());
 		userFind.setNome(user.getNome());
-		userFind.setSenha(encoder);
 		return new UsuarioDTO(usuarioRepository.save(userFind));
 
 	}
+	
+	public String updatePassword(UsuarioDTO user, Long id) {
+		UsuarioEntity userFind = usuarioRepository.findById(id)
+				.orElseThrow(() -> new NotFound("Usuario não encontrado!"));
+		
+		String encoder = passwordEncoder.encode(user.getSenha());
+		
+		userFind.setSenha(encoder);
+		usuarioRepository.save(userFind);
+		return "Senha modificada com sucesso!";
+	}
+	
 	
 	//Modificar o status do usuario
 	public UsuarioDTO updateStatusUser(UsuarioDTO user, Long id) {
