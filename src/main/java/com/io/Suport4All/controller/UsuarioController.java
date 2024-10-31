@@ -66,7 +66,10 @@ public class UsuarioController {
 	public UsuarioDTO updateStatusUser(@RequestBody UsuarioDTO user, @PathVariable Long id) {
 		return usuarioService.updateStatusUser(user, id);
 	}
-	
+	@PutMapping("/update/password/{id}")
+	public String updatePassword(@RequestBody UsuarioDTO user,@PathVariable Long id) {
+		return usuarioService.updatePassword(user, id);
+	}
 
 	@GetMapping("/list/departamento")
 	public List<UsuarioDTOAnexo> findAllUsersByDepart(@RequestBody UsuarioDTO user) {
