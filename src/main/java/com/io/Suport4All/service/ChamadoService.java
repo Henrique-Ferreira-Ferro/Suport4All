@@ -166,6 +166,24 @@ public class ChamadoService {
 		
 	}
 	
+	//Listar todos os chamados de um determinado usuario 
+	public List<ChamadoDTOAnexo> findAllChamadoByIdUser(Long idUser){
+		List<ChamadoEntity> chamadoEnt = chamadoRepository.findAllChamadoByIdUser(idUser);
+
+		List<ChamadoDTOAnexo> chamadoDto = new ArrayList<>();
+		
+		if(chamadoEnt.isEmpty()) {
+			throw new NotFound("Não há chamados abertos no momento!");
+		}
+		
+		for(ChamadoEntity chamadoE: chamadoEnt) {
+			chamadoDto.add(new ChamadoDTOAnexo(chamadoE));
+		}
+		
+		return chamadoDto;
+	}
+	
+	
 	
 	public List<ChamadoDTO> findByDate(String date){
 		

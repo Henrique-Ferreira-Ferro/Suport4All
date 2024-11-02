@@ -51,6 +51,12 @@ public class ChamadoController {
 	public List<ChamadoDTOAnexo> findAll() {
 		return chamadoService.findAll();
 	}
+	
+	@GetMapping("/user/list/{id}")
+	public List<ChamadoDTOAnexo> findAllChamadoByIdUser(@PathVariable Long id){
+		return chamadoService.findAllChamadoByIdUser(id);
+	}
+
 
 	@GetMapping("/date")
 	public List<ChamadoDTO> findByDate(@RequestBody ChamadoDTO chamadoDTO) {

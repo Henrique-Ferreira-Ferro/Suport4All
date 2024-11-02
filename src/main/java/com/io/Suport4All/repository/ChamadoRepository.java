@@ -28,5 +28,8 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long>{
 	@Query(value = "SELECT count(status) from chamado WHERE status = 'FECHADO'", nativeQuery = true)
 	int countStatusFechado();
 	
+	@Query(value = "SELECT * FROM chamado WHERE usuario_id = ?1", nativeQuery = true)
+	List<ChamadoEntity> findAllChamadoByIdUser(Long id);
+	
 	
 }
