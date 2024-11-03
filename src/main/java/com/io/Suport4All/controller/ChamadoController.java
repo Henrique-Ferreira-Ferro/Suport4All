@@ -88,4 +88,22 @@ public class ChamadoController {
 		return chamadoService.countStatusFechado();
 	}
 	
+	
+	//Pesquisa de chamado para Usuario especifico 
+	
+	@GetMapping("/status/aberto/{id}")
+	public int countStatusAbertoUser(@PathVariable Long id) {
+		return chamadoService.countStatusAbertoUser(id);
+	}
+	
+	@GetMapping("/status/andamento/{id}")
+	public int countStatusEmAndamentoUser(@PathVariable Long id) {
+		return chamadoService.countStatusAndamentoUser(id);
+	}
+	
+	@GetMapping("/status/fechado/{id}")
+	public int countStatusFechadoUser(@PathVariable Long id) {
+		return chamadoService.countStatusFechadoUser(id);
+	}
+	
 }
