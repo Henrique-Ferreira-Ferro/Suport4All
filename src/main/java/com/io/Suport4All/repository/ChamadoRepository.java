@@ -1,6 +1,5 @@
 package com.io.Suport4All.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,5 +30,15 @@ public interface ChamadoRepository extends JpaRepository<ChamadoEntity, Long>{
 	@Query(value = "SELECT * FROM chamado WHERE usuario_id = ?1", nativeQuery = true)
 	List<ChamadoEntity> findAllChamadoByIdUser(Long id);
 	
+	//Pesquisas voltadas para o usuario
+	
+	@Query(value = "SELECT count(status) FROM chamado WHERE status = 'ABERTO' AND usuario_id = ?1", nativeQuery = true)
+	int countStatusAbertoUser(Long id);
+	
+	@Query(value = "SELECT count(status) FROM chamado WHERE status = 'EM_ANDAMENTO' AND usuario_id = ?1", nativeQuery = true)
+	int countStatusAndamentoUser(Long id);
+	
+	@Query(value = "SELECT count(status) FROM chamado WHERE status = 'FECHADO' AND usuario_id = ?1", nativeQuery = true)
+	int countStatusFechadoUser(Long id);
 	
 }

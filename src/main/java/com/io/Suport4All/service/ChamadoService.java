@@ -264,5 +264,20 @@ public class ChamadoService {
 		return chamadoRepository.countStatusFechado();
 	}
 	
+	//Contagem dos chamados para usuarios especificos 
+	
+	
+	public int countStatusAbertoUser(Long id) {
+		return chamadoRepository.countStatusAbertoUser(id);
+	}
+	
+	
+	public int countStatusAndamentoUser(Long id) {
+		return chamadoRepository.countStatusAndamentoUser(id);
+	}
+	
+	public int countStatusFechadoUser(Long id) {
+		return chamadoRepository.countStatusFechadoUser(id);
+	}
 	
 }
