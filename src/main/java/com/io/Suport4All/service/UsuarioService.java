@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.io.Suport4All.dto.UsuarioDTO;
@@ -58,6 +59,8 @@ public class UsuarioService {
 				userFind.setAnexo(filePath.toString());
 			}catch(IOException e) {
 				throw new BadRequestException("Não foi possivel carregar a foto do usuario!"+ e.getMessage());
+			}catch(MaxUploadSizeExceededException f) {
+				throw new BadRequestException("Imagem muito grande! Favor escolher uma imagem menor!" + f.getMessage());
 			}
 			
 		}
