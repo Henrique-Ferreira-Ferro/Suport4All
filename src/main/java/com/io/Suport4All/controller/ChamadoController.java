@@ -3,6 +3,8 @@ package com.io.Suport4All.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -37,6 +39,12 @@ public class ChamadoController {
 		return chamadoService.openChamado(chamadoDTO);
 	}
 
+	//Recuperar anexo do chamado!
+	@GetMapping("/download/{chamadoId}")
+	public ResponseEntity<InputStreamResource> downloadAnexo(@PathVariable Long chamadoId){
+		return chamadoService.downloadAnexo(chamadoId);
+	}
+	
 	@PutMapping("/update/{id}")
 	public ChamadoDTO editChamado(@RequestBody @Valid ChamadoUpdateDTO chamadoDTO, @PathVariable Long id) {
 		return chamadoService.updateChamado(chamadoDTO, id);

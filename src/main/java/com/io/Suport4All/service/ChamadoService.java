@@ -1,12 +1,12 @@
 package com.io.Suport4All.service;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +14,10 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +32,7 @@ import com.io.Suport4All.exceptions.ForbiddenException;
 import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.ChamadoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
+
 
 @Service
 public class ChamadoService {
@@ -251,6 +256,41 @@ public class ChamadoService {
 		return chamadoDto;
 		
 	}
+	
+	//Download do anexo enviado 
+	
+	public ResponseEntity<InputStreamResource> downloadAnexo(Long chamadoId) {
+	    // Localiza o chamado pelo ID e lança exceção se não encontrado
+	    ChamadoEntity chamado = chamadoRepository.findById(chamadoId)
+	        .orElseThrow(() -> new NotFound("Chamado não encontrado para o ID: " + chamadoId));
+
+	    // Verifica se o anexo existe no chamado
+	    if (chamado.getAnexo() == null || chamado.getAnexo().isEmpty()) {
+	        throw new NotFound("Nenhum anexo encontrado para este chamado.");
+	    }
+
+	    // Define o caminho do arquivo
+	    Path filePath = Paths.get(chamado.getAnexo());
+	    try {
+	        InputStreamResource resource = new InputStreamResource(new FileInputStream(filePath.toFile()));
+
+	        // Configura cabeçalhos de resposta para o download
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + filePath.getFileName().toString());
+
+	        return ResponseEntity.ok()
+	            .headers(headers)
+	            .contentLength(Files.size(filePath))
+	            .contentType(MediaType.APPLICATION_OCTET_STREAM)
+	            .body(resource);
+
+	    } catch (FileNotFoundException e) {
+	        throw new NotFound("Arquivo não encontrado: " + e.getMessage());
+	    } catch (IOException e) {
+	        throw new BadRequestException("Erro ao baixar o arquivo: " + e.getMessage());
+	    }
+	}
+	
 	
 	public int countStatusAberto() {
 		return chamadoRepository.countStatusAberto();
