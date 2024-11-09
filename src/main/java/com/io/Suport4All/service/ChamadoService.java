@@ -139,9 +139,9 @@ public class ChamadoService {
 			throw new ForbiddenException("Não é possivel editar um chamado Fechado!");
 		}	
 		
-		if(!userFind.getRole().toString().equals("ADMIN")) {
-			throw new ForbiddenException("Somente os Tecnicos podem editar os Chamados!");
-		}
+//		if(!userFind.getRole().toString().equals("ADMIN")) {
+//			throw new ForbiddenException("Somente os Tecnicos podem editar os Chamados!");
+//		}
 		ChamadoEntity chamadoMod =  chamadoEnt.get();
 		chamadoMod.setStatus(chamadoDto.getStatus());
 		chamadoMod = chamadoRepository.save(chamadoMod);

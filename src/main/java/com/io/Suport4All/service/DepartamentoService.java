@@ -11,6 +11,7 @@ import com.io.Suport4All.dto.DepartamentoDTO;
 import com.io.Suport4All.entity.DepartamentoEntity;
 import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.ForbiddenException;
 import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.repository.DepartamentoRepository;
 import com.io.Suport4All.repository.UsuarioRepository;
@@ -51,6 +52,14 @@ public class DepartamentoService {
 
 		if (departamentoDTO.getNomeDepart().isBlank() || departamentoDTO.getNomeDepart() == null) {
 			throw new BadRequestException("Não deixe o nome do departamento em branco!");
+		}
+		
+		List<DepartamentoEntity> allDeparts = repositoryDepart.findAll();
+		
+		for (DepartamentoEntity departamentoEntity : allDeparts) {
+			if(departamentoDTO.getNomeDepart().equals(departamentoEntity.getNomeDepart())) {
+				throw new ForbiddenException("Não gere departamentos com mesmo nome!");
+			}
 		}
 		
 		DepartamentoEntity departamento = new DepartamentoEntity();
