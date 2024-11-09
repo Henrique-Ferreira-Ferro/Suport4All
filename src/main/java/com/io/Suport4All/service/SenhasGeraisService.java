@@ -52,7 +52,7 @@ public class SenhasGeraisService {
 		Optional<SenhasGeraisEntity> senhaEntity = senhaRepository.findById(id);
 		
 		if(!senhaEntity.isPresent()) {
-			throw new RuntimeException("Não foi possivel encontrar a senha com id: "+ id);
+			throw new NotFound("Não foi possivel encontrar a senha com id: "+ id);
 		}
 		
 		
@@ -78,7 +78,7 @@ public class SenhasGeraisService {
 		Optional<SenhasGeraisEntity> senhaEntity = senhaRepository.findById(id);
 		
 		if(!senhaEntity.isPresent()) {
-			throw new RuntimeException("A senha com id: "+ id + ", não existe no sistema!");
+			throw new NotFound("A senha com id: "+ id + ", não existe no sistema!");
 		}
 		
 		return new SenhasGeraisDto(senhaEntity.get());
@@ -95,7 +95,7 @@ public class SenhasGeraisService {
 		List<SenhasGeraisDto> senhasDto = new ArrayList<>();
 		
 		if(senhasEntity.isEmpty()) {
-			throw new RuntimeException("Nenhuma senha encontrada!");
+			throw new NotFound("Nenhuma senha encontrada!");
 		}
 		for (SenhasGeraisEntity senhasEnt : senhasEntity) {
 			senhasDto.add(new SenhasGeraisDto(senhasEnt));

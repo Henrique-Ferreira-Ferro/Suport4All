@@ -5,16 +5,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.io.Suport4All.repository.UsuarioRepository;
+import com.io.Suport4All.repository.ChamadoRepository;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UsuarioServiceTest {
+public class ChamadoServiceTest {
 
 	@Mock
-	private UsuarioRepository usuarioRepository;
+	private ChamadoRepository chamadoRepository;
 	
 	@InjectMocks
-	private UsuarioService usuarioService;
+	private ChamadoService chamadoService;
 	
 	
 	
