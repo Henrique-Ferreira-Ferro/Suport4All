@@ -1,17 +1,17 @@
-package com.io.Suport4All.entity;
+package com.io.Suport4All.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Setter
-@Getter
-public class Email {
+public class ChangePassword {
 	
-	private String destinatario;
-	private String assunto;
-	private String mensagem;
+	private String password;
+	private String repeatPassword;
+	
 }

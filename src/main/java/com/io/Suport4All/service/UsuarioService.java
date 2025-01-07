@@ -128,6 +128,18 @@ public class UsuarioService {
 		return "Senha modificada com sucesso!";
 	}
 	
+	public String updatePasswordByEmail(String password, String email) {
+		
+		UsuarioEntity userFind = usuarioRepository.findByEmail(email)
+				.orElseThrow(() -> new NotFound("Nenhum usuario com esse e-mail foi encontrado!"));
+		
+		String encoder = passwordEncoder.encode(password);
+		
+		userFind.setSenha(encoder);
+		usuarioRepository.save(userFind);
+		return "Senha modificada com sucesso!";
+	}
+	
 	
 	//Modificar o status do usuario
 	public UsuarioDTO updateStatusUser(UsuarioDTO user, Long id) {

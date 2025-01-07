@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -42,7 +43,8 @@ public class UsuarioEntity extends PessoaEntity{
 	
 	//Um usuario pode abrir muitos chamados
 	
-	
+	@OneToOne(mappedBy = "user")
+	private ForgotPassword forgotPassword;
 	
 	public UsuarioEntity() {
 		
