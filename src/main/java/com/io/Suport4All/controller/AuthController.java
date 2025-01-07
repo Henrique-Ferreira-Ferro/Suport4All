@@ -20,6 +20,7 @@ import com.io.Suport4All.entity.UsuarioEntity;
 import com.io.Suport4All.enums.UserRole;
 import com.io.Suport4All.enums.UserStatus;
 import com.io.Suport4All.exceptions.BadRequestException;
+import com.io.Suport4All.exceptions.ForbiddenException;
 import com.io.Suport4All.exceptions.NotFound;
 import com.io.Suport4All.infra.security.TokenService;
 import com.io.Suport4All.repository.DepartamentoRepository;
@@ -46,7 +47,7 @@ public class AuthController {
 			String token = this.tokenService.generateToken(user);
 			return ResponseEntity.ok(new ResponseDTO(user.getEmail(), token));
 		}
-		throw new ObjectNotFoundException(user.getId(), UsuarioEntity.class.getName());
+		throw new ForbiddenException("E-mail ou senha incorreta!");
 	}
 	
 	

@@ -5,7 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.io.Suport4All.entity.Email;
+import com.io.Suport4All.dto.MailBody;
 
 @Service
 public class EmailService {
@@ -22,19 +22,21 @@ public class EmailService {
 	@Value("${spring.mail.username}")
 	private String remetente;
 	
-	public String enviarEmail(Email email) {
+	public String enviarEmail(MailBody mailBody) {
 		try {
 			SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+			simpleMailMessage.setTo(mailBody.getTo());
 			simpleMailMessage.setFrom(remetente);
-			simpleMailMessage.setTo(email.getDestinatario());
-			simpleMailMessage.setSubject(email.getAssunto());
-			simpleMailMessage.setText(email.getMensagem());
+			simpleMailMessage.setSubject(mailBody.getSubject());
+			simpleMailMessage.setText(mailBody.getText());
+			
 			javaMailSender.send(simpleMailMessage);
 			return "Email enviado";
 		}catch(Exception e) {
 			return "Erro ao enviar email "+ e.getLocalizedMessage();
 		}
 	}
+
 	
 	
 }
