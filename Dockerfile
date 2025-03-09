@@ -1,28 +1,19 @@
-# Usa uma imagem com Maven e OpenJDK
-FROM maven:3.8.6-openjdk-17 AS build
+FROM ubuntu:latest AS build
 
-# Define o diretório de trabalho dentro do container
-WORKDIR /app
-
-# Copia os arquivos do projeto para dentro do container
+RUN apt-get update
+RUN apt-get install openjdk-17-jdk -y
 COPY . .
 
-# Compila o projeto (gera o JAR)
-RUN mvn clean package -DskipTests
+RUN apt-get install maven -y
+RUN mvn clean install 
 
-# Segunda etapa: imagem mais leve para rodar o JAR
-FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-# Copia apenas o JAR gerado na etapa anterior
-COPY --from=build /app/target/Suport4All.jar app.jar
-
-# Cria os diretórios temporários para armazenar imagens
 RUN mkdir -p /tmp/images /tmp/images-perfil
 
-# Expõe a porta 8080
+
+FROM openjdk:17-jdk-slim
+
 EXPOSE 8080
 
-# Comando para rodar a aplicação
-CMD ["java", "-jar", "app.jar"]
+COPY --from=build /app/target/Suport4All.jar app.jar
+
+ENTRYPOINT [ "java", "-jar", "app.jar" ]
