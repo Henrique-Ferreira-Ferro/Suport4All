@@ -131,11 +131,4 @@ public class ForgotPasswordController {
 	}
 
 
-
-//	private Integer otpGenerator() {
-//
-//		Random random = new Random();
-//		return random.nextInt(100_000, 999_999);
-//	}
-
 }
