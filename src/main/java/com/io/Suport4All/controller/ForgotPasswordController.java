@@ -53,7 +53,9 @@ public class ForgotPasswordController {
 	public ResponseEntity<String> verifyEmail(@PathVariable String email) {
 		 UsuarioEntity user = userRepository.findByEmail(email)
 		            .orElseThrow(() -> new BadRequestException("Invalid email"));
-
+		 
+		 	forgotPasswordRepository.deleteByUser(user.getId());
+		 
 		    // Gerar token único para redefinição
 		    String token = UUID.randomUUID().toString();
 
@@ -61,7 +63,7 @@ public class ForgotPasswordController {
 		    MailBody mailBody = MailBody.builder()
 		            .to(email)
 		            .text("Clique no link para redefinir sua senha: " +
-		                    "http://localhost:5500/reset-password.html?token=" + token)
+		                    "http://localhost:5501/forget/reset/reset-password.html?token=" + token)
 		            .subject("Redefinição de Senha")
 		            .build();
 
