@@ -43,8 +43,8 @@ public class UsuarioEntity extends PessoaEntity{
 	
 	//Um usuario pode abrir muitos chamados
 	
-	@OneToOne(mappedBy = "user")
-	private ForgotPassword forgotPassword;
+//	@OneToOne(mappedBy = "user")
+//	private ForgotPassword forgotPassword;
 	
 	public UsuarioEntity() {
 		
