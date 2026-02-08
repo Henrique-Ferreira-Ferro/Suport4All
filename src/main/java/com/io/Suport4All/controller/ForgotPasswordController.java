@@ -63,7 +63,7 @@ public class ForgotPasswordController {
 		    MailBody mailBody = MailBody.builder()
 		            .to(email)
 		            .text("Clique no link para redefinir sua senha: " +
-		                    "http://localhost:5501/forget/reset/reset-password.html?token=" + token)
+		                    "https://security.suport4all.site/forget/reset/reset-password.html?token=" + token)
 		            .subject("Redefinição de Senha")
 		            .build();
 
